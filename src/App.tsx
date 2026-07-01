@@ -6,6 +6,7 @@ import FamilyLayout from "./layouts/FamilyLayout";
 import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
 import Purchases from "./pages/Purchases";
+import Login from "./pages/Login";
 
 
 function App() {
@@ -19,6 +20,11 @@ function App() {
         <Route 
           path="/families" 
           element={<FamilySelection />} 
+        />
+
+        <Route 
+          path="/login" 
+          element={<Login />} 
         />
 
 

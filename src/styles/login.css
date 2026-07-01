@@ -1,0 +1,79 @@
+.form-lay{
+    background: url('/fundo-novo.png') center/cover no-repeat;
+    height: 100vh;
+    background-attachment: fixed;
+    padding: 30px 50px;
+    display: flex;
+    justify-content: flex-end;
+
+
+}
+
+
+.form-box{
+    background-color: #121427;
+    border-radius: 40px 0px 0px 40px;
+    width: 40%;
+    padding: 20px 30px;
+    display: flex;
+    align-items: center;
+
+    flex-direction: column;
+}
+
+.form-title{
+    padding-top: 60px;
+    padding-bottom: 30px;
+}
+
+.form-title h1{
+    color: #BCADF2;
+    letter-spacing: 5px;
+    font-size: 45px;
+}
+
+
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    
+}
+
+.form input{
+    width: 100%;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #1D1E35;
+    outline: none;
+    border: none;
+    color: white;
+    padding-left: 50px;
+}
+
+.form label{
+    color: #BCADF2;
+}
+
+.btn-login{
+    padding: 10px;
+    font-size: 17px;
+    border-radius: 10px;
+    margin-top: 25px;
+    color: white;
+    background: linear-gradient(145deg, #BCADF2 0%, #7f1dbc 100%);
+}
+
+.input-lay{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.login-icon{
+    position: absolute;
+    color: #BCADF2;
+    left: 15px;
+    font-size: 20px;
+}
