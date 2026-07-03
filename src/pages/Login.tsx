@@ -3,7 +3,8 @@ import api from "../service/api";
 
 import type { LoginRequest } from "../types/auth/LoginRequest";
 import type { LoginResponse } from "../types/auth/LoginResponse";
-import { FaRegUser, FaLock } from "react-icons/fa";
+import { FaRegUser, FaGithub, FaStar, FaGoogle, FaDiscord} from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa6";
 import "../styles/login.css";
 import { LuLock } from "react-icons/lu";
 
@@ -68,9 +69,10 @@ function Login() {
 
     return (
         <main className="form-lay">
+            
             <div className="form-box">
                 <div className="form-title">
-                    <h1>Amethist</h1>
+                    <h2>Log<span className="color1">in</span> </h2>
                 </div>
 
             <form className="form" onSubmit={handleSubmit}>
@@ -85,6 +87,7 @@ function Login() {
                 placeholder="Email"
                 value={form.email}
                 onChange={handleChange}
+                required
             />
             </div>
             
@@ -99,6 +102,7 @@ function Login() {
                 placeholder="Senha"
                 value={form.password}
                 onChange={handleChange}
+                required
                 
             />
             </div>
@@ -107,11 +111,50 @@ function Login() {
 
             <button className="btn-login" type="submit">
                 Entrar
+                <FaArrowRight className="btn-login-icon" />
             </button>
 
 
+            <div className="division-div">
+                <div className="line"></div>
+                <FaStar className="line-icon" />
+                <div className="line"></div>
+            </div>
+            
+            <div className="or">
+                <h3>ou continue com</h3>
+            </div>
+
+            <div className="others-box">
+                <div className="other-icon-box">
+                    <FaGoogle className="other-icon" />
+                </div>
+                <div className="other-icon-box">
+                    <FaDiscord className="other-icon" />
+                </div>
+                <div className="other-icon-box">
+                    <FaGithub className="other-icon" />
+                </div>
+            </div>
+
+
+            <div className="cadastro-p">
+                <p>Ainda não possui uma conta? <span className="color1">Criar conta</span></p>
+            </div>
+            
+
         </form>
          </div>
+         <div className="fundo">
+                <h1>Ametis<span className="color2">ty</span><FaStar className="line-icon" /></h1>
+
+                <div className="fundo-texto-box">
+                    <h2>Gerencie, Controle, <span className="color2">sua vida financeira.</span></h2>
+                </div>
+
+                
+                
+            </div>
         </main>
         
 
