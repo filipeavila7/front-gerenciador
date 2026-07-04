@@ -21,7 +21,7 @@ function SideBar({ familyId }: { familyId: string }) {
                     </ul>
 
                     <ul>
-                        <Link to="/purchases">
+                        <Link to={`/family/${familyId}/purchases`}>
                             Compras
                         </Link>
                     </ul>

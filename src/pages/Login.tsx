@@ -7,9 +7,12 @@ import { FaRegUser, FaGithub, FaStar, FaGoogle, FaDiscord} from "react-icons/fa"
 import { FaArrowRight } from "react-icons/fa6";
 import "../styles/login.css";
 import { LuLock } from "react-icons/lu";
+import { useNavigate } from "react-router-dom";
 
 
 function Login() {
+
+    const navigate = useNavigate();
 
     const [form, setForm] = useState<LoginRequest>({
         email: "",
@@ -32,39 +35,26 @@ function Login() {
     }
 
 
-    async function handleSubmit(
-        event: React.SubmitEvent<HTMLFormElement>
-    ) {
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
 
-        event.preventDefault();
+    try {
+        const response = await api.post<LoginResponse>("/auth/login", form);
 
+        console.log("LOGIN RESPONSE:", response);
 
-        try {
-
-            const response = await api.post<LoginResponse>(
-                "/auth/login",
-                form
-            );
-
-
-            localStorage.setItem(
-                "token",
-                response.data.token
-            );
-
-            
-
-
-            console.log("Login realizado");
-
-
-        } catch (error) {
-
-            console.log("Erro no login");
-
+        if (!response.data?.token) {
+            throw new Error("Token não veio da API");
         }
 
+        localStorage.setItem("token", response.data.token);
+
+        navigate("/families");
+
+    } catch (error) {
+        console.error("Erro no login:", error);
     }
+}
 
 
     return (
@@ -152,6 +142,16 @@ function Login() {
                     <h2>Gerencie, Controle, <span className="color2">sua vida financeira.</span></h2>
                 </div>
 
+                <FaStar className="star-1" />
+                <FaStar className="star-2" />
+                <FaStar className="star-3" />
+                <FaStar className="star-4" />
+                <FaStar className="star-5" />
+                <FaStar className="star-6" />
+                <FaStar className="star-7" />
+                <FaStar className="star-8" />
+                <FaStar className="star-9" />
+                <FaStar className="star-10" />
                 
                 
             </div>
