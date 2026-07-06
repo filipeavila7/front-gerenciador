@@ -7,18 +7,31 @@
     box-sizing: border-box;
     font-family: "Quicksand", sans-serif;
     font-optical-sizing: auto;
+   
   
 }
 
 
 body{
-  background-color: #121427;;
+  background: radial-gradient(circle at 15% 10%, #241a3d 0%, transparent 45%),
+                radial-gradient(circle at 85% 15%, #2a1a45 0%, transparent 40%),
+                #0e0a1f;
+    background-attachment: fixed;
 }
 
 h1{
     font-family: "Cormorant Garamond", serif;
   font-optical-sizing: auto;
 }
+
+.layout{
+  display: flex;
+}
+
+.main-lay{
+  padding: 50px 30px;
+}
+
 
 
 /* #9A8C98 */

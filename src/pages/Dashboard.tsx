@@ -1,8 +1,10 @@
+import MyBalance from "../components/transactions/MyBalance"
 
 
 function Dashboard() {
   return (
-    <div>Dashboard</div>
+    <MyBalance/>
+    
   )
 }
 

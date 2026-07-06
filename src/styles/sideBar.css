@@ -1,0 +1,56 @@
+.nav{
+    background: linear-gradient(180deg, #1c1738, #14112a);
+    border: 1.5px solid #2c2650;
+    width: 15%;
+    height: 100vh;
+    position: sticky;
+    padding: 20px 10px;
+
+}
+
+.nav-item.active {
+    background: linear-gradient(145deg, #E8F994 0%, #A594F9 100%);
+    color: black;
+    border-radius: 10px;
+}
+
+.nav-item.active .side-icon {
+    color: black;
+}
+
+
+.nav-title-icon{
+    color: #E8F994;
+    font-size: 15px;
+}
+
+.nav-title{
+    display: flex;
+    align-items: center;
+    padding-bottom: 15px;
+}
+
+.nav-title p{
+    
+    color: #E8F994;
+    font-size: 18px;
+    font-family: "Playwrite ID", cursive;
+    letter-spacing: 3px;
+}
+
+.side-icon{
+    color: white;
+    font-size: 19px;
+}
+
+
+.nav-links ul li a{
+   text-decoration: none;
+   color: rgb(192, 192, 192);
+   padding: 15px;
+   display: flex;
+   gap: 10px;
+}
+
+
+

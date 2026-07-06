@@ -1,5 +1,5 @@
 import { Outlet, useParams } from "react-router-dom";
-import SideBar from "../components/SideBar";
+import SideBar from "../components/layout/SideBar";
 
 
 function FamilyLayout() {
@@ -8,11 +8,11 @@ function FamilyLayout() {
 
 
   return (
-    <div>
+    <div className="layout">
 
       <SideBar familyId={familyId!}/>
 
-      <main>
+      <main className="main-lay"  >
         <Outlet />
       </main>
 
