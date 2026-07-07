@@ -3,10 +3,31 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 15px;
     padding-top: 20px;
-    
-     
 }
 
+/* o gráfico ocupa 2 das 4 colunas */
+.graph-card{
+    grid-column: span 2;
+}
+
+/* responsividade do grid inteiro */
+@media (max-width: 1100px){
+    .dashboard-lay{
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .graph-card{
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 600px){
+    .dashboard-lay{
+        grid-template-columns: 1fr;
+    }
+    .graph-card{
+        grid-column: span 1;
+    }
+}
 
 .dashboard-header{
     display: flex;

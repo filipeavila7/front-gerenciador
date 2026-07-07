@@ -1,0 +1,129 @@
+.graph-card{
+    background-color: #1b1d38;
+    border: 1px solid #a5a3ab57;
+    border-radius: 15px;
+    padding: 20px;
+    height: 400px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.graph-empty{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 220px;
+}
+
+.graph-empty p{
+    color: #a5a3ab;
+    font-size: 14px;
+}
+
+/* ===== corpo: gráfico + legenda lado a lado ===== */
+.graph-body{
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.graph-chart-box{
+    position: relative;
+    flex: 0 0 220px;
+}
+
+.graph-center-label{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+}
+
+.graph-total-value{
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.graph-total-caption{
+    font-size: 12px;
+    color: #a5a3ab;
+    margin-top: 2px;
+}
+
+/* ===== legenda customizada ===== */
+.graph-legend{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+}
+
+.graph-legend-row{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.graph-legend-label{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+}
+
+.graph-legend-dot{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.graph-legend-name{
+    font-size: 14px;
+    color: #d8d2f0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.graph-legend-value{
+    font-size: 14px;
+    color: #ffffff;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.graph-legend-percentage{
+    font-size: 13px;
+    color: #a5a3ab;
+    width: 48px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+/* ===== responsividade ===== */
+@media (max-width: 900px){
+    .graph-body{
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .graph-chart-box{
+        flex: none;
+        align-self: center;
+    }
+}
+
+@media (max-width: 500px){
+    .graph-legend-name{ font-size: 13px; }
+    .graph-legend-value{ font-size: 13px; }
+}
