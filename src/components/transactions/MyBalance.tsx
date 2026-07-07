@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import api from "../../service/api";
 import { useState, useEffect } from "react";
 import type { BalanceResponse } from "../../types/transaction/BalanceResponse";
+import "../../styles/balance.css"
+import { LuPiggyBank } from "react-icons/lu";
 
 function MyBalance() {
   const { familyId } = useParams<{ familyId: string }>();
@@ -34,9 +36,16 @@ function MyBalance() {
   if (loading) return <div>Carregando...</div>;
 
   return (
-    <div>
-      <h2>Saldo atual</h2>
-      <p>R$ {balance.toFixed(2)}</p>
+    <div className="balance-box">
+      <div className="balance-title">
+        <p>Saldo atual</p>
+        <h2>R$ {balance.toFixed(2)}</h2>
+      </div>
+      <div className="balance-icon-box">
+        <LuPiggyBank className="balance-icon" />
+      </div>
+      
+      
     </div>
   );
 }

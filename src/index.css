@@ -13,9 +13,7 @@
 
 
 body{
-  background: radial-gradient(circle at 15% 10%, #241a3d 0%, transparent 45%),
-                radial-gradient(circle at 85% 15%, #2a1a45 0%, transparent 40%),
-                #0e0a1f;
+    background: linear-gradient(180deg, #13102f, #0b0920);
     background-attachment: fixed;
 }
 
@@ -30,6 +28,7 @@ h1{
 
 .main-lay{
   padding: 50px 30px;
+  width: 100%;
 }
 
 
