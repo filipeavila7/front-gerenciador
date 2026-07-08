@@ -21,8 +21,8 @@ interface Props {
     month: number;
 }
 
-// stops do degradê: roxo clarinho -> roxo -> amarelo antigo
-const GRADIENT_STOPS = ["#c9bde0", "#8b7fd6", "#E8F994"];
+// stops do degradê: roxo clarinho -> roxo -> amarelo 
+const GRADIENT_STOPS = ["#8b7fd6", "#c9bde0", "#E8F994"];
 
 function hexToRgb(hex: string) {
     const clean = hex.replace("#", "");
