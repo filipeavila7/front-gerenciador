@@ -4,6 +4,7 @@ import MyBalance from "../components/transactions/MyBalance";
 import MyIncome from "../components/transactions/MyIncome";
 import MyExpense from "../components/transactions/MyExpense";
 import TotalTransactions from "../components/transactions/TotalTransactions";
+import TransactionHistory from "../components/transactions/TransactionHistory";
 
 import "../styles/balance.css";
 
@@ -177,6 +178,9 @@ function Dashboard() {
           year={year}
           month={month}
         />
+        
+        <TransactionHistory/>
+        
 
       </div>
 

@@ -3,11 +3,11 @@
     border: 1px solid #a5a3ab57;
     border-radius: 15px;
     padding: 20px;
-    height: 400px;
+    
     color: #ffffff;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    
 }
 
 .graph-empty{

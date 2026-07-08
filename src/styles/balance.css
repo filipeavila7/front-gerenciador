@@ -164,3 +164,71 @@
     font-size: 30px;
     color: #E8F994;
 }
+
+
+
+.transaction-history-box {
+    grid-column: span 2;
+    background-color: #1b1d38;
+    border: 1px solid #a5a3ab57;
+    border-radius: 15px;
+    padding: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+   
+}
+
+
+.transaction-history {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgb(91, 91, 91);
+    border-bottom: 1px solid rgb(91, 91, 91);
+    padding: 15px 20px;
+    
+}
+
+
+.transaction-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+
+.transaction-history-icon-box {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #252842;
+    border-radius: 50%;
+    overflow-y: auto;
+}
+
+
+.transaction-title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+
+.transaction-date {
+    margin: 5px 0 0;
+    color: #a5a3ab;
+    font-size: 13px;
+}
+
+
+.transaction-value {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.title-2{
+    padding-bottom: 10px;
+}

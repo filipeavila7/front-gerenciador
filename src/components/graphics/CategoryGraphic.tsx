@@ -129,6 +129,7 @@ function CategoryGraphic({
     return (
 
         <div className="graph-card">
+            <p className="title-2">Gastos por categoria</p>
 
             {chartData.length === 0 ? (
                 <div className="graph-empty">
