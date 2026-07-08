@@ -18,6 +18,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import api from "../service/api";
 import { useParams } from "react-router-dom";
 import CategoryGraphic from "../components/graphics/CategoryGraphic";
+import Greeting from "../components/utils/Greeting";
 
 
 interface TransactionBalanceMonthResponse {
@@ -112,7 +113,7 @@ function Dashboard() {
 
       <div className="dashboard-header">
 
-        <UserData />
+        <Greeting />
 
 
         <div className="header-actions">

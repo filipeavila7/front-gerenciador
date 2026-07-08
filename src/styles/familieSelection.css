@@ -38,6 +38,8 @@
     z-index: 1;
 }
 
+
+
 .family-title h2{
     margin: 0;
     font-size: 2.4rem;
@@ -118,6 +120,7 @@
     padding: 32px 20px;
     box-sizing: border-box;
     position: relative;
+    cursor: pointer;
     transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
 }
 

@@ -5,7 +5,7 @@ import "../../styles/user.css"
 
 
 function UserData() {
-    const [user, setUser] = useState<UserResponse | null>(null);
+  const [user, setUser] = useState<UserResponse | null>(null);
 
   async function getMe() {
 

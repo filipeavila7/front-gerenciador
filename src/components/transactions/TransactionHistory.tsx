@@ -7,6 +7,7 @@ import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { formatDate } from "../utils/formatDate";
 
 import "../../styles/balance.css"
+import { getErrorMessage } from "../utils/getErrorMessage";
 
 function TransactionHistory() {
     const { familyId } = useParams();
@@ -18,7 +19,7 @@ function TransactionHistory() {
             setTransactions(res.data)
         }
         catch (error) {
-            console.log(error);
+            console.log(getErrorMessage(error));
         }
 
     }

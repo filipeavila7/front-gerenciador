@@ -5,6 +5,7 @@ import type { BalanceResponse } from "../../types/transaction/BalanceResponse";
 import "../../styles/balance.css"
 import { LuPiggyBank } from "react-icons/lu";
 import { useCountAnimation } from "../utils/useCountAnimation";
+import { getErrorMessage } from "../utils/getErrorMessage";
 
 function MyBalance() {
   const { familyId } = useParams<{ familyId: string }>();
@@ -26,7 +27,7 @@ function MyBalance() {
 
         setBalance(response.data.balance);
       } catch (error) {
-        console.error("Erro ao buscar balance:", error);
+        console.error(getErrorMessage(error));
       } finally {
         setLoading(false);
       }

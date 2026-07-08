@@ -3,6 +3,8 @@ import type { FamilyResponse } from "../types/family/FamilyResponse"
 import api from "../service/api";
 import "../styles/familieSelection.css";
 import { useNavigate } from "react-router-dom";
+import type { UserResponse } from "../types/user/UserResponse";
+import { getErrorMessage } from "../components/utils/getErrorMessage";
 
 const VISIBLE_CARDS = 4;
 
@@ -36,7 +38,8 @@ export default function FamilySelection() {
   const [families, setFamilies] = useState<FamilyResponse[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedId, setSelectedId] = useState<number | string | null>(null);
-
+  const [user, setUser] = useState<UserResponse | null>(null);
+  
   async function loadFamilies() {
     const res = await api.get<FamilyResponse[]>("/families/my")
     setFamilies(res.data)
@@ -45,8 +48,24 @@ export default function FamilySelection() {
     }
   }
 
+  
+    async function getMe() {
+  
+      try{
+          const res = await api.get<UserResponse>("users/me")
+          setUser(res.data);
+      }
+      catch(erro){
+          console.log(getErrorMessage(erro))
+      }
+      
+    }
+  
+  
+
   useEffect(() => {
     loadFamilies()
+    getMe();
   }, [])
 
   const hasCarousel = families.length > VISIBLE_CARDS;
@@ -91,7 +110,7 @@ export default function FamilySelection() {
 
       <div className="family-header">
         <div className="family-title">
-          <h2>Olá user, Selecione sua <span className="highlight">Família</span></h2>
+          <h2>Olá {user?.name}, Selecione sua <span className="highlight">Família</span></h2>
           <p>Escolha a família que deseja acessar para gerenciar seus gastos.</p>
         </div>
         <button className="create-family-btn">
