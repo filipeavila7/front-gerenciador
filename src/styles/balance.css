@@ -166,16 +166,26 @@
 }
 
 
-
-.transaction-history-box {
+.history-lay{
     grid-column: span 2;
     background-color: #1b1d38;
     border: 1px solid #a5a3ab57;
-    border-radius: 15px;
+    color: white;
     padding: 20px;
+}
+
+
+.transaction-history-box {
+    
+    
+    border-radius: 15px;
+   
     color: white;
     display: flex;
     flex-direction: column;
+    height: 235px;
+    overflow-y: auto;
+     scrollbar-width: none;
    
 }
 

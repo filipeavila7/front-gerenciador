@@ -2,12 +2,16 @@ import { useParams } from "react-router-dom";
 import api from "../../service/api";
 import { useState, useEffect } from "react";
 import { MdAttachMoney } from "react-icons/md";
+import { useCountAnimation } from "../utils/useCountAnimation";
 
 function TotalTransactions() {
 
     const { familyId } = useParams();
 
     const [total, setTotal] = useState(0);
+
+
+    const animatedTotal = useCountAnimation(total);
 
 
     async function getTotal() {
@@ -43,7 +47,7 @@ function TotalTransactions() {
                 <p>Transações feitas</p>
 
                 <h2>
-                    {total}
+                    {animatedTotal}
                 </h2>
 
             </div>

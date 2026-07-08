@@ -65,6 +65,8 @@
     flex-direction: column;
     gap: 14px;
     min-width: 0;
+    overflow-y: auto;
+     scrollbar-width: none;
 }
 
 .graph-legend-row{

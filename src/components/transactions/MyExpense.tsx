@@ -1,4 +1,4 @@
-
+import { useCountAnimation } from "../utils/useCountAnimation";
 import { FaArrowUp } from "react-icons/fa";
 
 interface MyExpenseProps {
@@ -6,12 +6,12 @@ interface MyExpenseProps {
 }
 
 function MyExpense({ value }: MyExpenseProps) {
-
+    const animatedValue = useCountAnimation(value ?? 0);
     return (
         <div className="balance-box">
             <div className="balance-title">
                 <p>Despesas</p>
-                <h2>R$ {value?.toFixed(2) ?? "0.00"}</h2>
+                <h2>R$ {animatedValue.toFixed(2) ?? "0.00"}</h2>
             </div>
             
             <div className="balance-icon-box">
