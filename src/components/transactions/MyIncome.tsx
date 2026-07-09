@@ -1,5 +1,5 @@
 import { FaArrowDown } from "react-icons/fa";
-import { useCountAnimation } from "../utils/useCountAnimation";
+import { useCountAnimation } from "../utils/UseCountAnimation";
 
 interface MyIncomeProps {
     value: number | undefined;

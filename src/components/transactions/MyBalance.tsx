@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import type { BalanceResponse } from "../../types/transaction/BalanceResponse";
 import "../../styles/balance.css"
 import { LuPiggyBank } from "react-icons/lu";
-import { useCountAnimation } from "../utils/useCountAnimation";
-import { getErrorMessage } from "../utils/getErrorMessage";
+import { useCountAnimation } from "../utils/UseCountAnimation";
+import { getErrorMessage } from "../utils/GetErrorMessage";
 
 function MyBalance() {
   const { familyId } = useParams<{ familyId: string }>();

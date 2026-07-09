@@ -4,7 +4,7 @@ import api from "../service/api";
 import "../styles/familieSelection.css";
 import { useNavigate } from "react-router-dom";
 import type { UserResponse } from "../types/user/UserResponse";
-import { getErrorMessage } from "../components/utils/getErrorMessage";
+import { getErrorMessage } from "../components/utils/GetErrorMessage";
 
 const VISIBLE_CARDS = 4;
 

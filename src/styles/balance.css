@@ -33,6 +33,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: sticky;
+    top: 0;
+    padding: 20px;
+    background: linear-gradient(180deg, #1c1738, #14112a);
+    border: 1.5px solid #2c2650;
+    border-radius: 20px;
+    z-index: 999;
 }
 
 

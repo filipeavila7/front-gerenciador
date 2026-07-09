@@ -27,8 +27,9 @@ h1{
 }
 
 .main-lay{
-  padding: 30px 30px;
+  padding: 0px 30px;
   width: 100%;
+  padding-bottom: 50px;
 }
 
 

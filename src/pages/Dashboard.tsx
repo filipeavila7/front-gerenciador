@@ -8,7 +8,6 @@ import TransactionHistory from "../components/transactions/TransactionHistory";
 
 import "../styles/balance.css";
 
-import UserData from "../components/user/UserData";
 
 
 import { FaRegCalendarAlt } from "react-icons/fa";
@@ -19,6 +18,8 @@ import api from "../service/api";
 import { useParams } from "react-router-dom";
 import CategoryGraphic from "../components/graphics/CategoryGraphic";
 import Greeting from "../components/utils/Greeting";
+import MyProducts from "../components/product/MyProducts";
+import MyCategory from "../components/category/MyCategory";
 
 
 interface TransactionBalanceMonthResponse {
@@ -181,6 +182,8 @@ function Dashboard() {
         />
         
         <TransactionHistory/>
+        <MyProducts/>
+        <MyCategory/>
         
 
       </div>

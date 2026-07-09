@@ -2,8 +2,8 @@ import { useParams } from "react-router-dom";
 import api from "../../service/api";
 import { useState, useEffect } from "react";
 import { MdAttachMoney } from "react-icons/md";
-import { useCountAnimation } from "../utils/useCountAnimation";
-import { getErrorMessage } from "../utils/getErrorMessage";
+import { useCountAnimation } from "../utils/UseCountAnimation";
+import { getErrorMessage } from "../utils/GetErrorMessage";
 
 function TotalTransactions() {
 

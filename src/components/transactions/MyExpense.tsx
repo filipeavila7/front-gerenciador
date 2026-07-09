@@ -1,4 +1,4 @@
-import { useCountAnimation } from "../utils/useCountAnimation";
+import { useCountAnimation } from "../utils/UseCountAnimation";
 import { FaArrowUp } from "react-icons/fa";
 
 interface MyExpenseProps {

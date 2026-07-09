@@ -48,10 +48,10 @@ function Greeting() {
     return (
         <div>
             <h2>
-                <span style={{ color: "#b9a6f0" }}>
+                <span style={{ color: "#eef299" }}>
                     {getGreeting()},
                 </span>{" "}
-                <span style={{ color: "#eef299" }}>
+                <span style={{ color: "#b9a6f0" }}>
                    família { family?.name ?? "usuário"}!
                 </span>
             </h2>

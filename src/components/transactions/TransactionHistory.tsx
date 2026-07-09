@@ -4,10 +4,10 @@ import type { TransactionResponse, TransactionType } from "../../types/transacti
 import { useState, useEffect } from "react"
 import type { PageResponse } from "../../types/pagination/PageResponse";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
-import { formatDate } from "../utils/formatDate";
+import { formatDate } from "../utils/FormatDate";
 
 import "../../styles/balance.css"
-import { getErrorMessage } from "../utils/getErrorMessage";
+import { getErrorMessage } from "../utils/GetErrorMessage";
 
 function TransactionHistory() {
     const { familyId } = useParams();

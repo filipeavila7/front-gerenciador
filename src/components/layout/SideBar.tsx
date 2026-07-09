@@ -8,6 +8,8 @@ import { BiCategory } from "react-icons/bi";
 import { GoGraph } from "react-icons/go";
 import { HiOutlineCog } from "react-icons/hi";
 import { FaStar } from "react-icons/fa";
+import { CiCircleList } from "react-icons/ci";
+
 
 type Props = {
     familyId: string;
@@ -40,6 +42,11 @@ function SideBar({ familyId }: Props) {
             label: "Categorias",
             icon: <BiCategory className="side-icon" />,
             path: `/family/${familyId}/category`,
+        },
+        {
+            label: "Lista compras",
+            icon: <CiCircleList className="side-icon" />,
+            path: `/family/${familyId}/shoppingList`,
         },
         {
             label: "Relatórios",
