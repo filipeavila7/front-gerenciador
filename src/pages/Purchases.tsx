@@ -111,7 +111,7 @@ function Purchases() {
         }
 
         if (activeTab === "PENDENTES") {
-            result = result.filter(p => p.type === "OPEN");
+            result = result.filter(p => p.status === "OPEN");
         }
 
         if (search.trim()) {
@@ -128,7 +128,7 @@ function Purchases() {
             <div className="purchases-header">
                 <div className="purchases-title-box">
                     <h1>
-                        Compras 
+                        Compras
                     </h1>
                     <p>Visualize e gerencie todas as compras da sua família.</p>
                 </div>
@@ -169,21 +169,7 @@ function Purchases() {
                         Este mês
                     </button>
 
-                    <button
-                        className="tab-btn tab-disabled"
-                        title="Ainda não temos como identificar a loja/origem da compra"
-                        disabled
-                    >
-                        Mercado
-                    </button>
 
-                    <button
-                        className="tab-btn tab-disabled"
-                        title="Ainda não temos como identificar a loja/origem da compra"
-                        disabled
-                    >
-                        Online
-                    </button>
 
                     <button
                         className={`tab-btn ${activeTab === "PENDENTES" ? "tab-active" : ""}`}
@@ -216,7 +202,7 @@ function Purchases() {
                     {filteredPurchases.map(purchase => {
                         const Icon = getIconForPurchase(purchase.name);
                         const isFavorite = favorites.has(purchase.purchaseId);
-                        const isOpen = purchase.type === "OPEN";
+                        const isOpen = purchase.status === "OPEN";
 
                         return (
                             <div className="purchase-card" key={purchase.purchaseId}>
@@ -228,6 +214,8 @@ function Purchases() {
 
                                     <div className="purchase-card-title">
                                         <h3>{purchase.name}</h3>
+
+
                                         <span className={`status-badge ${isOpen ? "status-open" : "status-closed"}`}>
                                             {isOpen ? "Em aberto" : "Concluída"}
                                         </span>
@@ -257,9 +245,19 @@ function Purchases() {
 
                                 <button
                                     className="details-btn"
-                                    onClick={() => navigate(`/family/${familyId}/purchases/${purchase.purchaseId}`)}
+                                    onClick={() => navigate(
+                                        `/family/${familyId}/purchases/${purchase.purchaseId}`,
+                                        {
+                                            state: {
+                                                name: purchase.name,
+                                                dateTime: purchase.dateTime,
+                                                total: purchase.total,
+                                                status: purchase.status
+                                            }
+                                        }
+                                    )}
                                 >
-                                    Ver detalhes <FaArrowRight />
+                                    {isOpen ? "Editar compra" : "Ver detalhes"} <FaArrowRight />
                                 </button>
 
                             </div>

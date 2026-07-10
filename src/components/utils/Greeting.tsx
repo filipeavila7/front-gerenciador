@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../service/api";
 import type { FamilyResponse } from "../../types/family/FamilyResponse";
-
+import "../../styles/balance.css"
 
 function Greeting() {
     const { familyId } = useParams<{ familyId: string }>();
@@ -47,14 +47,12 @@ function Greeting() {
 
     return (
         <div>
-            <h2>
-                <span style={{ color: "#eef299" }}>
+            <h1 className="greeting-1">
                     {getGreeting()},
-                </span>{" "}
-                <span style={{ color: "#b9a6f0" }}>
+                <span className="greeting-2">
                    família { family?.name ?? "usuário"}!
                 </span>
-            </h2>
+            </h1>
         </div>
     );
 }

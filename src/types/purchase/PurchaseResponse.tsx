@@ -6,7 +6,7 @@ export interface PurchaseResponse{
     name : string;
     familyId : number;
     dateTime : string;
-    type : PurchaseStatus;
+    status : PurchaseStatus;
     quantityProducts : number;
     total : number
 

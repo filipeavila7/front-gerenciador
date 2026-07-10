@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
 import Purchases from "./pages/Purchases";
 import Login from "./pages/Login";
+import PurchaseItens from "./pages/PurchaseItens";
 
 
 function App() {
@@ -47,6 +48,11 @@ function App() {
           <Route 
             path="purchases" 
             element={<Purchases />} 
+          />
+
+          <Route 
+            path="purchases/:purchaseId" 
+            element={<PurchaseItens />} 
           />
 
         </Route>
