@@ -17,10 +17,12 @@ import {
     FaRegCalendarAlt,
     FaArrowRight,
     FaChevronLeft,
-    FaChevronRight
+    FaChevronRight,
+    FaTimes
 } from "react-icons/fa";
 
 import "../styles/purchases.css";
+import type { PurchaseRequest } from "../types/purchase/PurchaseRequest";
 
 const PAGE_SIZE = 12;
 
@@ -48,14 +50,32 @@ function formatDate(dateTime: string) {
 function Purchases() {
     const { familyId } = useParams();
     const navigate = useNavigate();
-
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [pageData, setPageData] = useState<PageResponse<PurchaseResponse> | null>(null);
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(0);
-
+    const [purchase, setPurchase] = useState<PurchaseRequest>({
+        name: ""
+    });
     const [activeTab, setActiveTab] = useState<FilterTab>("TODAS");
     const [search, setSearch] = useState("");
     const [favorites, setFavorites] = useState<Set<number>>(new Set());
+
+
+    async function createPurchase(e: React.SubmitEvent<HTMLFormElement>) {
+        e.preventDefault();
+        try {
+            await api.post(`/purchase/new/family/${familyId}`, purchase);
+            closeModal();
+            loadPurchases(page)
+            setPurchase({
+                name: ""
+            });
+
+        } catch (err) {
+            console.log(getErrorMessage(err));
+        }
+    }
 
     async function loadPurchases(pageNumber: number) {
         if (!familyId) return;
@@ -122,8 +142,64 @@ function Purchases() {
         return result;
     }, [purchases, activeTab, search]);
 
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+
+
+
     return (
+
+
         <div className="purchases-lay">
+
+            {
+                isModalOpen && (
+                    <div className="modal-overlay">
+                        <div className="modal-box-2">
+                            <div className="modal-header">
+                                <h2>Nova compra</h2>
+                                <button className="modal-close-btn" onClick={closeModal}>
+                                    <FaTimes />
+                                </button>
+                            </div>
+
+                            <div className="form-purchase-modal">
+                                <div className="purchase-form-box">
+                                    <form className="purchase-form" onSubmit={createPurchase}>
+                                        <input
+                                            type="text"
+                                            value={purchase.name}
+                                            onChange={(e) =>
+                                                setPurchase({
+                                                    ...purchase,
+                                                    name: e.target.value
+                                                })
+                                            }
+                                            placeholder="Nome da compra"
+                                        />
+
+                                        <button className="modal-confirm-btn" type="submit">
+                                            Criar compra
+                                        </button>
+
+                                        <button onClick={closeModal} className="modal-cancel-btn">Cancelar</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                )
+            }
 
             <div className="purchases-header">
                 <div className="purchases-title-box">
@@ -146,7 +222,7 @@ function Purchases() {
 
                     <button
                         className="new-purchase-btn"
-                        onClick={() => navigate(`/family/${familyId}/purchases/new`)}
+                        onClick={openModal}
                     >
                         <FaPlus /> Nova compra
                     </button>

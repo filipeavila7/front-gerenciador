@@ -10,6 +10,7 @@ import type { DeleteManyRequest } from "../types/purchase/DeleteManyRequest";
 import { getErrorMessage } from "../components/utils/GetErrorMessage";
 import AddProductModal from "../components/modals/AddProductModal";
 import EditItemModal from "../components/modals/EditItemModal";
+import { useNavigate } from "react-router-dom";
 
 import {
     FaUtensils,
@@ -17,6 +18,7 @@ import {
     FaCar,
     FaHeartbeat,
     FaGamepad,
+    FaArrowLeft,
     FaGraduationCap,
     FaPlane,
     FaFilm,
@@ -61,7 +63,7 @@ function formatDate(dateTime: string) {
 function PurchaseItens() {
 
     const { familyId, purchaseId } = useParams();
-
+    const navigate = useNavigate();
     const [purchase, setPurchase] = useState<PurchaseResponse | null>(null);
     const [pageData, setPageData] = useState<PageResponse<PurchaseItemResponse> | null>(null);
 
@@ -213,6 +215,9 @@ function PurchaseItens() {
 
                 <div className="purchase-itens-header">
                     <div className="purchase-itens-title">
+                        <div onClick={()=> navigate(-1)} className="voltar-box">
+                            <FaArrowLeft className="voltar-icon" />
+                        </div>
                         <h2>{purchase?.name ?? "Itens da compra"}</h2>
                         {purchase?.dateTime && (
                             <span className="purchase-itens-date">{formatDate(purchase.dateTime)}</span>

@@ -455,11 +455,30 @@
 }
 
 .item-checkbox{
+    appearance: none;
+    background-color: #bcadf2;
     width: 16px;
-    height: 16px;
-    accent-color: #E8F994;
+    height: 16px;  
+    position: relative;
+    
     cursor: pointer;
+
 }
+
+.item-checkbox:checked{
+    background-color: #E8F994;
+}
+
+
+.item-checkbox:checked::after{
+    content: "✓";
+  position: absolute;
+  color: rgb(5, 0, 0);
+  font-size: 14px;
+  left: 3px;
+  top: -1px;
+}
+
 
 .item-actions{
     display: flex;
