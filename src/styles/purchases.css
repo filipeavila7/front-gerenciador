@@ -369,6 +369,7 @@
 
 
 .purchase-itens-lay{
+    margin-top: 30px;
     background-color: #1b1d38;
     border: 1px solid #a5a3ab57;
     border-radius: 16px;
@@ -442,6 +443,9 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    height: 350px;
+    overflow-y: auto;
+    scrollbar-width: none;
     transition: opacity 0.2s ease;
 }
 
