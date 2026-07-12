@@ -122,6 +122,7 @@
     max-height: 380px;
     overflow-y: auto;
     padding-right: 4px;
+    scrollbar-width: none;
 }
 
 .modal-product-row{
