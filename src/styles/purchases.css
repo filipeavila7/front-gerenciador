@@ -1,3 +1,168 @@
+/* ===== dropdown de ações no card ===== */
+.purchase-card{
+    position: relative; /* necessário pro dropdown se posicionar em relação ao card */
+}
+
+.purchase-card-deleting{
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.purchase-dots-box{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.purchase-action-wrapper{
+    position: relative;
+}
+
+.purchase-action-menu{
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    background: #1b1d38;
+    border: 1px solid #a5a3ab57;
+    border-radius: 10px;
+    padding: 6px;
+    min-width: 180px;
+    z-index: 30;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    animation: actionMenuIn 0.15s ease;
+}
+
+@keyframes actionMenuIn{
+    from{
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.action-menu-item{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #d8d2f0;
+    font-size: 13px;
+    padding: 9px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s ease;
+}
+
+.action-menu-item:hover{
+    background: #24264a;
+}
+
+.action-menu-danger{
+    color: #ff8080;
+}
+
+.action-menu-danger:hover{
+    background: rgba(255, 100, 100, 0.12);
+}
+
+/* ===== formulário dos modais de compra ===== */
+.purchase-form-box{
+    display: flex;
+    flex-direction: column;
+}
+
+.purchase-form{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.purchase-form input{
+    background: #14152b;
+    border: 1px solid #a5a3ab57;
+    border-radius: 10px;
+    color: #ffffff;
+    padding: 12px 14px;
+    font-size: 14px;
+    outline: none;
+}
+
+.purchase-form input:focus{
+    border-color: #6f6ab8;
+}  
+
+
+.action-menu-success{
+    color: #E8F994;
+}
+
+.action-menu-success:hover{
+    background: rgba(232, 249, 148, 0.12);
+}
+
+.close-purchase-warning{
+    font-size: 13px;
+    color: #a5a3ab;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    background: rgba(188, 173, 242, 0.08);
+    border: 1px solid #a5a3ab3d;
+    border-radius: 10px;
+    padding: 12px 14px;
+}
+
+.close-purchase-warning strong{
+    color: #d8d2f0;
+}
+
+.purchase-form-label{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #d8d2f0;
+    margin-bottom: -4px;
+}
+
+.optional-tag{
+    font-size: 11px;
+    color: #a5a3ab;
+    background: #14152b;
+    border: 1px solid #a5a3ab3d;
+    padding: 2px 8px;
+    border-radius: 20px;
+}
+
+.purchase-form textarea{
+    background: #14152b;
+    border: 1px solid #a5a3ab57;
+    border-radius: 10px;
+    color: #ffffff;
+    padding: 12px 14px;
+    font-size: 14px;
+    outline: none;
+    resize: vertical;
+    font-family: inherit;
+}
+
+.purchase-form textarea:focus{
+    border-color: #6f6ab8;
+}
+
+.modal-confirm-btn-close{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+
 .purchases-lay{
     padding-top: 40px;
 }
@@ -29,9 +194,16 @@
     border-radius: 18px;
     padding: 24px;
     color: #ffffff;
-    height: 45vh;
+   
+    height: 42vh;
     overflow-y: auto;
     animation: modalPopIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.purchase-dots-box{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 /* ===== header ===== */
