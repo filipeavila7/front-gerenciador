@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import api from "../service/api";
 import type { PageResponse } from "../types/pagination/PageResponse";
@@ -8,10 +8,10 @@ import type { ProductUpdateRequest } from "../types/product/ProductUpdateRequest
 import { getErrorMessage } from "../components/utils/GetErrorMessage";
 import { useToast } from "../context/ToastContext";
 import CategorySelectField from "../components/product/CategorySelectField";
+import CategoryFilterDropdown from "../components/product/CategoryFilterDropdown";
 import { HiDotsVertical } from "react-icons/hi";
 
 import {
-    FaChevronDown,
     FaPlus,
     FaSearch,
     FaChevronLeft,
@@ -32,23 +32,23 @@ import {
     FaGift,
     FaWallet,
     FaTshirt,
-    FaPaw,
     FaEllipsisH
 } from "react-icons/fa";
 
 import "../styles/product.css";
 import "../styles/purchaseModals.css";
 
-// UI-page de 36 produtos, sobrescrevendo o size padrão de 12 do backend via query param
 const PAGE_SIZE = 36;
+const DEBOUNCE_MS = 400;
 
 const PRODUCT_ICONS = [
     FaUtensils, FaHome, FaCar, FaHeartbeat, FaGamepad, FaGraduationCap,
-    FaPlane, FaFilm, FaDumbbell, FaGift, FaWallet, FaTshirt,FaEllipsisH,
+    FaPlane, FaFilm, FaDumbbell, FaGift, FaWallet, FaTshirt, FaEllipsisH,
 ];
 
-function getIconForCategory(name: string) {
-    const hash = name.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
+function getIconForCategory(name: string | undefined | null) {
+    const safeName = name?.trim() || "outros";
+    const hash = safeName.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
     return PRODUCT_ICONS[hash % PRODUCT_ICONS.length];
 }
 
@@ -56,11 +56,16 @@ function Products() {
     const { familyId } = useParams();
     const { showToast } = useToast();
 
-    // ===== listagem =====
+    // ===== listagem/filtro =====
     const [pageData, setPageData] = useState<PageResponse<ProductResponse> | null>(null);
     const [page, setPage] = useState(0);
     const [loading, setLoading] = useState(false);
-    const [search, setSearch] = useState("");
+
+    const [searchInput, setSearchInput] = useState("");
+    const [debouncedSearch, setDebouncedSearch] = useState("");
+
+    const [filterCategoryId, setFilterCategoryId] = useState<number | null>(null);
+    const [filterCategoryName, setFilterCategoryName] = useState<string | null>(null);
 
     // ===== dropdown de ações (⋮) por card =====
     const [openActionId, setOpenActionId] = useState<number | null>(null);
@@ -96,15 +101,46 @@ function Products() {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [openActionId]);
 
+    // debounce da busca por nome — só atualiza o termo "de verdade" após o usuário parar de digitar
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearch(searchInput);
+            setPage(0); // toda vez que o filtro muda, volta pra primeira página
+        }, DEBOUNCE_MS);
+
+        return () => clearTimeout(timer);
+    }, [searchInput]);
+
+    // recarrega sempre que a página, o termo de busca (debounced) ou a categoria mudarem
+    useEffect(() => {
+        loadProducts(page);
+    }, [familyId, page, debouncedSearch, filterCategoryId]);
+
     async function loadProducts(pageNumber: number) {
         if (!familyId) return;
 
         setLoading(true);
 
+        const hasFilter = debouncedSearch.trim().length > 0 || filterCategoryId !== null;
+
         try {
             const res = await api.get<PageResponse<ProductResponse>>(
-                `/products/my/family/${familyId}`,
-                { params: { page: pageNumber, size: PAGE_SIZE } }
+                hasFilter
+                    ? `/products/my/family/${familyId}/search`
+                    : `/products/my/family/${familyId}`,
+                {
+                    params: hasFilter
+                        ? {
+                              name: debouncedSearch.trim() || undefined,
+                              categoryId: filterCategoryId ?? undefined,
+                              page: pageNumber,
+                              size: PAGE_SIZE
+                          }
+                        : {
+                              page: pageNumber,
+                              size: PAGE_SIZE
+                          }
+                }
             );
 
             setPageData(res.data);
@@ -115,20 +151,16 @@ function Products() {
         }
     }
 
-    useEffect(() => {
-        loadProducts(page);
-    }, [familyId, page]);
-
     const products = pageData?.content ?? [];
-
-    const filteredProducts = useMemo(() => {
-        if (!search.trim()) return products;
-        const term = search.trim().toLowerCase();
-        return products.filter(p => p.name.toLowerCase().includes(term));
-    }, [products, search]);
 
     function toggleActionMenu(productId: number) {
         setOpenActionId(prev => (prev === productId ? null : productId));
+    }
+
+    function handleCategoryFilterSelect(categoryId: number | null, categoryName: string | null) {
+        setFilterCategoryId(categoryId);
+        setFilterCategoryName(categoryName);
+        setPage(0);
     }
 
     // ===== criar produto =====
@@ -338,8 +370,8 @@ function Products() {
                         <input
                             type="text"
                             placeholder="Pesquisar produtos..."
-                            value={search}
-                            onChange={e => setSearch(e.target.value)}
+                            value={searchInput}
+                            onChange={e => setSearchInput(e.target.value)}
                         />
                     </div>
 
@@ -351,13 +383,14 @@ function Products() {
 
             <div className="product-toolbar">
                 <div className="product-tabs">
-                    <button className="tab-btn tab-active">Todos</button>
-                </div>
-
-                <div className="product-sort">
-                    <button className="sort-btn">
-                        Nome A-Z <FaChevronDown />
-                    </button>
+                    {familyId && (
+                        <CategoryFilterDropdown
+                            familyId={familyId}
+                            selectedCategoryId={filterCategoryId}
+                            selectedCategoryName={filterCategoryName}
+                            onSelect={handleCategoryFilterSelect}
+                        />
+                    )}
                 </div>
             </div>
 
@@ -365,14 +398,14 @@ function Products() {
                 <div className="product-empty">
                     <p>Carregando produtos...</p>
                 </div>
-            ) : filteredProducts.length === 0 ? (
+            ) : products.length === 0 ? (
                 <div className="product-empty">
                     <FaBoxOpen className="empty-icon" />
                     <p>Nenhum produto encontrado.</p>
                 </div>
             ) : (
                 <div className="product-grid">
-                    {filteredProducts.map(product => {
+                    {products.map(product => {
                         const Icon = getIconForCategory(product.categoryName);
                         const isMenuOpen = openActionId === product.id;
                         const isDeleting = deletingId === product.id;
@@ -416,7 +449,7 @@ function Products() {
                                 </div>
 
                                 <p className="product-card-name">{product.name}</p>
-                                <span className="product-card-category">{product.categoryName}</span>
+                                <span className="product-card-category">{product.categoryName || "Sem categoria"}</span>
 
                             </div>
                         );

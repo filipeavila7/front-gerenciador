@@ -34,4 +34,19 @@ h1{
 
 
 
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0b0920;
+}
+
+::-webkit-scrollbar-thumb {
+    background:#bcadf2;
+    border-radius: 10px;
+}
+
+
 /* #9A8C98 */
