@@ -8,6 +8,7 @@ import Products from "./pages/Products";
 import Purchases from "./pages/Purchases";
 import Login from "./pages/Login";
 import PurchaseItens from "./pages/PurchaseItens";
+import Category from "./pages/category";
 import { ToastProvider } from "./context/ToastContext";
 
 function App() {
@@ -39,6 +40,11 @@ function App() {
             <Route
               path="products"
               element={<Products />}
+            />
+
+            <Route
+              path="category"
+              element={<Category />}
             />
 
             <Route

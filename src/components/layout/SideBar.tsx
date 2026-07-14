@@ -28,11 +28,7 @@ function SideBar({ familyId }: Props) {
             icon: <IoBagHandleOutline className="side-icon" />,
             path: `/family/${familyId}/purchases`,
         },
-        {
-            label: "Transações",
-            icon: <GrTransaction className="side-icon" />,
-            path: `/family/${familyId}/transactions`,
-        },
+        
         {
             label: "Produtos",
             icon: <FiShoppingBag className="side-icon" />,
@@ -42,6 +38,11 @@ function SideBar({ familyId }: Props) {
             label: "Categorias",
             icon: <BiCategory className="side-icon" />,
             path: `/family/${familyId}/category`,
+        },
+        {
+            label: "Transações",
+            icon: <GrTransaction className="side-icon" />,
+            path: `/family/${familyId}/transactions`,
         },
         {
             label: "Lista compras",

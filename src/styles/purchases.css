@@ -1,3 +1,103 @@
+/* ===== filtro de data (calendário) ===== */
+.date-filter-wrapper{
+    position: relative;
+}
+
+.calendar-btn-active{
+    border-color: #E8F994;
+    color: #E8F994;
+}
+
+.date-filter-popover{
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: #1b1d38;
+    border: 1px solid #a5a3ab57;
+    border-radius: 12px;
+    padding: 16px;
+    min-width: 240px;
+    z-index: 40;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    animation: actionMenuIn 0.15s ease;
+}
+
+.date-filter-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: #d8d2f0;
+    font-weight: 600;
+}
+
+.date-filter-clear{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: transparent;
+    border: none;
+    color: #ff8080;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.date-filter-field{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.date-filter-field label{
+    font-size: 11px;
+    color: #a5a3ab;
+}
+
+.date-filter-field input[type="date"]{
+    background: #14152b;
+    border: 1px solid #a5a3ab57;
+    border-radius: 8px;
+    color: #ffffff;
+    padding: 8px 10px;
+    font-size: 13px;
+    outline: none;
+    color-scheme: dark;
+}
+
+.date-filter-field input[type="date"]:focus{
+    border-color: #6f6ab8;
+}
+
+.date-filter-apply{
+    width: 100%;
+    margin-top: 6px;
+    padding: 10px;
+    font-size: 13px;
+}
+
+/* ===== dropdown de ordenação ===== */
+.sort-dropdown-wrapper{
+    position: relative;
+}
+
+.sort-dropdown-menu{
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    background: #1b1d38;
+    border: 1px solid #a5a3ab57;
+    border-radius: 10px;
+    padding: 6px;
+    min-width: 170px;
+    z-index: 40;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    animation: actionMenuIn 0.15s ease;
+}
+
+
+
 /* ===== dropdown de ações no card ===== */
 .purchase-card{
     position: relative; /* necessário pro dropdown se posicionar em relação ao card */

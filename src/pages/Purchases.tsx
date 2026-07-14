@@ -1,14 +1,16 @@
-import { useEffect, useState, useMemo, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../service/api";
 import type { PageResponse } from "../types/pagination/PageResponse";
-import type { PurchaseResponse } from "../types/purchase/PurchaseResponse";
+import type { PurchaseResponse, PurchaseStatus } from "../types/purchase/PurchaseResponse";
 import type { PurchaseRequest } from "../types/purchase/PurchaseRequest";
 import type { PurchaseUpdateRequest } from "../types/purchase/PurchaseUpdateRequest";
 import type { PurchaseTransactionRequest } from "../types/purchase/PurchaseTransactionRequest";
 import { getErrorMessage } from "../components/utils/GetErrorMessage";
 import { HiDotsVertical } from "react-icons/hi";
 import { useToast } from "../context/ToastContext";
+import PurchaseDateFilter from "../components/purchase/PurchaseDateFilter";
+import PurchaseSortDropdown from "../components/purchase/PurchaseSortDropdown";
 
 import {
     FaBoxOpen,
@@ -18,20 +20,20 @@ import {
     FaRegStar,
     FaSearch,
     FaPlus,
-    FaChevronDown,
-    FaRegCalendarAlt,
     FaArrowRight,
     FaChevronLeft,
     FaChevronRight,
     FaTimes,
     FaPen,
     FaTrash,
-    FaCheckCircle
+    FaCheckCircle,
+    FaRegCalendarAlt
 } from "react-icons/fa";
 
 import "../styles/purchases.css";
 
 const PAGE_SIZE = 12;
+const DEBOUNCE_MS = 400;
 
 type FilterTab = "TODAS" | "ESTE_MES" | "PENDENTES";
 
@@ -52,6 +54,21 @@ function formatDate(dateTime: string) {
         month: "short",
         year: "numeric"
     });
+}
+
+// yyyy-mm-dd, formato aceito pelo @DateTimeFormat(iso = ISO.DATE) do Spring
+function toIsoDate(date: Date) {
+    return date.toISOString().split("T")[0];
+}
+
+function getFirstDayOfMonth() {
+    const now = new Date();
+    return toIsoDate(new Date(now.getFullYear(), now.getMonth(), 1));
+}
+
+function getLastDayOfMonth() {
+    const now = new Date();
+    return toIsoDate(new Date(now.getFullYear(), now.getMonth() + 1, 0));
 }
 
 function Purchases() {
@@ -80,12 +97,22 @@ function Purchases() {
     // ===== exclusão =====
     const [deletingId, setDeletingId] = useState<number | null>(null);
 
-    // ===== listagem =====
+    // ===== listagem/filtros =====
     const [pageData, setPageData] = useState<PageResponse<PurchaseResponse> | null>(null);
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(0);
+
     const [activeTab, setActiveTab] = useState<FilterTab>("TODAS");
-    const [search, setSearch] = useState("");
+
+    const [searchInput, setSearchInput] = useState("");
+    const [debouncedSearch, setDebouncedSearch] = useState("");
+
+    // filtro de data manual (calendário) — quando preenchido, tem prioridade sobre o preset "Este mês"
+    const [customStartDate, setCustomStartDate] = useState<string | null>(null);
+    const [customEndDate, setCustomEndDate] = useState<string | null>(null);
+
+    const [sortValue, setSortValue] = useState("dateTime,desc");
+
     const [favorites, setFavorites] = useState<Set<number>>(new Set());
 
     // fecha o dropdown de ações ao clicar fora dele
@@ -103,28 +130,67 @@ function Purchases() {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [openActionId]);
 
+    // debounce da busca por nome
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearch(searchInput);
+            setPage(0);
+        }, DEBOUNCE_MS);
+
+        return () => clearTimeout(timer);
+    }, [searchInput]);
+
+    // recarrega sempre que qualquer filtro/página/ordenação mudar
+    useEffect(() => {
+        loadPurchases(page);
+    }, [familyId, page, debouncedSearch, activeTab, customStartDate, customEndDate, sortValue]);
+
     async function loadPurchases(pageNumber: number) {
         if (!familyId) return;
 
         setLoading(true);
 
+        // status vem do tab "Pendentes"; os outros tabs não filtram por status
+        const status: PurchaseStatus | undefined = activeTab === "PENDENTES" ? "OPEN" : undefined;
+
+        // regra de prioridade: se o usuário escolheu datas manualmente no calendário,
+        // elas sobrescrevem o preset "Este mês" do tab
+        let startDate: string | undefined;
+        let endDate: string | undefined;
+
+        if (customStartDate || customEndDate) {
+            startDate = customStartDate ?? undefined;
+            endDate = customEndDate ?? undefined;
+        } else if (activeTab === "ESTE_MES") {
+            startDate = getFirstDayOfMonth();
+            endDate = getLastDayOfMonth();
+        }
+
         try {
             const res = await api.get<PageResponse<PurchaseResponse>>(
-                `/purchase/my/family/${familyId}`,
-                { params: { page: pageNumber, size: PAGE_SIZE } }
+                `/purchase/my/family/${familyId}/search`,
+                {
+                    params: {
+                        name: debouncedSearch.trim() || undefined,
+                        status,
+                        startDate,
+                        endDate,
+                        page: pageNumber,
+                        size: PAGE_SIZE,
+                        sort: sortValue
+                    }
+                }
             );
 
             setPageData(res.data);
         } catch (err) {
-            console.log(getErrorMessage(err));
+            showToast("error", getErrorMessage(err));
         } finally {
             setLoading(false);
         }
     }
 
-    useEffect(() => {
-        loadPurchases(page);
-    }, [familyId, page]);
+    const purchases = pageData?.content ?? [];
 
     function toggleFavorite(id: number) {
         setFavorites(prev => {
@@ -135,30 +201,28 @@ function Purchases() {
         });
     }
 
-    const purchases = pageData?.content ?? [];
+    function handleTabChange(tab: FilterTab) {
+        setActiveTab(tab);
+        setPage(0);
 
-    const filteredPurchases = useMemo(() => {
-        let result = purchases;
-
-        if (activeTab === "ESTE_MES") {
-            const now = new Date();
-            result = result.filter(p => {
-                const d = new Date(p.dateTime);
-                return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
-            });
+        // trocar de aba limpa o filtro manual de data, pra não conflitar com o preset
+        if (tab !== "ESTE_MES") {
+            setCustomStartDate(null);
+            setCustomEndDate(null);
         }
+    }
 
-        if (activeTab === "PENDENTES") {
-            result = result.filter(p => p.status === "OPEN");
+    function handleDateFilterApply(startDate: string | null, endDate: string | null) {
+        setCustomStartDate(startDate);
+        setCustomEndDate(endDate);
+        setPage(0);
+
+        // usar o calendário manualmente sai do preset "Este mês", já que agora
+        // o intervalo é escolhido à mão
+        if ((startDate || endDate) && activeTab === "ESTE_MES") {
+            setActiveTab("TODAS");
         }
-
-        if (search.trim()) {
-            const term = search.trim().toLowerCase();
-            result = result.filter(p => p.name.toLowerCase().includes(term));
-        }
-
-        return result;
-    }, [purchases, activeTab, search]);
+    }
 
     // ===== criar compra =====
     const openModal = () => setIsModalOpen(true);
@@ -175,11 +239,11 @@ function Purchases() {
             setPurchase({ name: "" });
             showToast("success", "Compra criada com sucesso!");
         } catch (err) {
-            console.log(getErrorMessage(err));
+            showToast("error", getErrorMessage(err));
         }
     }
 
-    // ===== dropdown =====
+    // ===== dropdown de ações =====
     function toggleActionMenu(purchaseId: number) {
         setOpenActionId(prev => (prev === purchaseId ? null : purchaseId));
     }
@@ -212,9 +276,9 @@ function Purchases() {
 
             closeEditModal();
             loadPurchases(page);
-            showToast("success", "Compra editada com sucesso!"); 
+            showToast("success", "Compra editada com sucesso!");
         } catch (err) {
-            console.log(getErrorMessage(err));
+            showToast("error", getErrorMessage(err));
         } finally {
             setSavingEdit(false);
         }
@@ -252,7 +316,7 @@ function Purchases() {
             loadPurchases(page);
             showToast("success", "Compra fechada com sucesso!");
         } catch (err) {
-            console.log(getErrorMessage(err));
+            showToast("error", getErrorMessage(err));
         } finally {
             setClosingSubmitting(false);
         }
@@ -271,7 +335,7 @@ function Purchases() {
             loadPurchases(page);
             showToast("success", "Compra excluída com sucesso!");
         } catch (err) {
-            console.log(getErrorMessage(err));
+            showToast("error", getErrorMessage(err));
         } finally {
             setDeletingId(null);
         }
@@ -282,7 +346,7 @@ function Purchases() {
 
             {/* ===== modal: criar compra ===== */}
             {isModalOpen && (
-                <div  onClick={closeModal} className="modal-overlay">
+                <div onClick={closeModal} className="modal-overlay">
                     <div onClick={(e) => e.stopPropagation()} className="modal-box-2">
                         <div className="modal-header">
                             <h2>Nova compra</h2>
@@ -461,8 +525,8 @@ function Purchases() {
                         <input
                             type="text"
                             placeholder="Pesquisar compras..."
-                            value={search}
-                            onChange={e => setSearch(e.target.value)}
+                            value={searchInput}
+                            onChange={e => setSearchInput(e.target.value)}
                         />
                     </div>
 
@@ -476,33 +540,33 @@ function Purchases() {
                 <div className="purchases-tabs">
                     <button
                         className={`tab-btn ${activeTab === "TODAS" ? "tab-active" : ""}`}
-                        onClick={() => setActiveTab("TODAS")}
+                        onClick={() => handleTabChange("TODAS")}
                     >
                         Todas
                     </button>
 
                     <button
                         className={`tab-btn ${activeTab === "ESTE_MES" ? "tab-active" : ""}`}
-                        onClick={() => setActiveTab("ESTE_MES")}
+                        onClick={() => handleTabChange("ESTE_MES")}
                     >
                         Este mês
                     </button>
 
                     <button
                         className={`tab-btn ${activeTab === "PENDENTES" ? "tab-active" : ""}`}
-                        onClick={() => setActiveTab("PENDENTES")}
+                        onClick={() => handleTabChange("PENDENTES")}
                     >
                         Pendentes
                     </button>
                 </div>
 
                 <div className="purchases-sort">
-                    <button className="sort-btn">
-                        Mais recentes <FaChevronDown />
-                    </button>
-                    <button className="calendar-btn">
-                        <FaRegCalendarAlt />
-                    </button>
+                    <PurchaseSortDropdown value={sortValue} onChange={setSortValue} />
+                    <PurchaseDateFilter
+                        startDate={customStartDate}
+                        endDate={customEndDate}
+                        onApply={handleDateFilterApply}
+                    />
                 </div>
             </div>
 
@@ -510,13 +574,13 @@ function Purchases() {
                 <div className="purchases-empty">
                     <p>Carregando compras...</p>
                 </div>
-            ) : filteredPurchases.length === 0 ? (
+            ) : purchases.length === 0 ? (
                 <div className="purchases-empty">
                     <p>Nenhuma compra encontrada.</p>
                 </div>
             ) : (
                 <div className="purchases-grid">
-                    {filteredPurchases.map(p => {
+                    {purchases.map(p => {
                         const Icon = getIconForPurchase(p.name);
                         const isFavorite = favorites.has(p.purchaseId);
                         const isOpen = p.status === "OPEN";
