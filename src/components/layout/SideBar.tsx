@@ -42,7 +42,7 @@ function SideBar({ familyId }: Props) {
         {
             label: "Transações",
             icon: <GrTransaction className="side-icon" />,
-            path: `/family/${familyId}/transactions`,
+            path: `/family/${familyId}/transaction`,
         },
         {
             label: "Lista compras",

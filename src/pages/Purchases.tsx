@@ -423,7 +423,7 @@ function Purchases() {
             {/* ===== modal: fechar compra ===== */}
             {closingPurchase && (
                 <div className="modal-overlay">
-                    <div className="modal-box-2">
+                    <div className="modal-box">
                         <div className="modal-header">
                             <h2>Fechar compra</h2>
                             <button className="modal-close-btn" onClick={closeCloseModal}>
