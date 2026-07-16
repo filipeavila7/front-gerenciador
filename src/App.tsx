@@ -10,8 +10,10 @@ import Login from "./pages/Login";
 import PurchaseItens from "./pages/PurchaseItens";
 import Category from "./pages/Category";
 import { ToastProvider } from "./context/ToastContext";
-import Transaction from "./pages/transaction";
+import Transaction from "./pages/Transaction";
 import TransactionDetails from "./pages/TransactionDetails";
+import ShoppingList from "./pages/ShoppingList";
+import ShoppingListItems from "./pages/ShoppingListItems";
 
 function App() {
   return (
@@ -57,6 +59,16 @@ function App() {
             <Route
               path="transaction"
               element={<Transaction />}
+            />
+
+            <Route
+              path="shopping-list"
+              element={<ShoppingList />}
+            />
+            
+            <Route
+              path="shopping-list/:shoppingListId"
+              element={<ShoppingListItems />}
             />
 
             <Route

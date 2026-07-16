@@ -47,7 +47,7 @@ function SideBar({ familyId }: Props) {
         {
             label: "Lista compras",
             icon: <CiCircleList className="side-icon" />,
-            path: `/family/${familyId}/shoppingList`,
+            path: `/family/${familyId}/shopping-list`,
         },
         {
             label: "Relatórios",
