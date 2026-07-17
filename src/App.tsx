@@ -14,6 +14,7 @@ import Transaction from "./pages/Transaction";
 import TransactionDetails from "./pages/TransactionDetails";
 import ShoppingList from "./pages/ShoppingList";
 import ShoppingListItems from "./pages/ShoppingListItems";
+import Graphics from "./pages/Graphics";
 
 function App() {
   return (
@@ -54,6 +55,11 @@ function App() {
             <Route
               path="purchases"
               element={<Purchases />}
+            />
+
+            <Route
+              path="graphics"
+              element={<Graphics />}
             />
 
             <Route

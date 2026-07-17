@@ -24,6 +24,7 @@ import {
 import "../styles/transactions.css";
 import "../styles/purchaseModals.css";
 import type { TransactionIncomeRequest } from "../types/transaction/TransactionIncomeRequest";
+import { useScrollPosition } from "../hooks/useScrollRestoration";
 
 const PAGE_SIZE = 12;
 const DEBOUNCE_MS = 400;
@@ -50,6 +51,7 @@ function toIsoDate(date: Date) {
 }
 
 function Transactions() {
+    useScrollPosition("transactions");
     const { familyId } = useParams();
     const navigate = useNavigate();
     const { showToast } = useToast();

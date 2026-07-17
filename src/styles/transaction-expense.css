@@ -1,0 +1,114 @@
+.transaction-chart{
+
+    width:100%;
+    padding:24px;
+
+
+    background:#22223B;
+
+    border: 1px solid #a5a3ab57;
+    border-radius: 15px;
+
+    
+
+    animation:fadeUp .7s ease;
+    grid-column: span 2;
+}
+
+
+
+.chart-header{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:20px;
+}
+
+.chart-header h3{
+
+    color:white;
+    font-size:22px;
+    font-weight:600;
+}
+
+.chart-header span{
+
+    color:#A594F9;
+
+    font-weight:bold;
+
+    background:rgba(165,148,249,.12);
+
+    padding:8px 16px;
+
+    border-radius:12px;
+}
+
+.recharts-cartesian-grid line{
+
+    stroke:rgba(255,255,255,.08);
+}
+
+.recharts-tooltip-wrapper{
+
+    outline:none;
+}
+
+.recharts-default-tooltip{
+
+    border:none !important;
+
+    background:#2B2B48 !important;
+
+    border-radius:14px !important;
+
+    box-shadow:0 12px 25px rgba(0,0,0,.35) !important;
+}
+
+.recharts-tooltip-item{
+
+    color:#A594F9 !important;
+}
+
+.recharts-bar-rectangle{
+
+    transition:.25s;
+}
+
+.recharts-bar-rectangle:hover{
+
+    filter:brightness(1.2);
+
+    cursor:pointer;
+}
+
+.loading{
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    height:350px;
+
+    color:white;
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+        transform:translateY(25px);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:translateY(0);
+
+    }
+
+}

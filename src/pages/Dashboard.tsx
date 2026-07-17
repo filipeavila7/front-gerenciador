@@ -20,6 +20,7 @@ import CategoryGraphic from "../components/graphics/CategoryGraphic";
 import Greeting from "../components/utils/Greeting";
 import MyProducts from "../components/product/MyProducts";
 import MyCategory from "../components/category/MyCategory";
+import { useScrollPosition } from "../hooks/useScrollRestoration";
 
 
 interface TransactionBalanceMonthResponse {
@@ -29,6 +30,7 @@ interface TransactionBalanceMonthResponse {
 
 
 function Dashboard() {
+  useScrollPosition("dashboard");
 
   const today = new Date();
 

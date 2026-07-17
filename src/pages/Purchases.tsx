@@ -31,6 +31,7 @@ import {
 } from "react-icons/fa";
 
 import "../styles/purchases.css";
+import { useScrollPosition } from "../hooks/useScrollRestoration";
 
 const PAGE_SIZE = 12;
 const DEBOUNCE_MS = 400;
@@ -72,6 +73,7 @@ function getLastDayOfMonth() {
 }
 
 function Purchases() {
+    useScrollPosition("purchases");
     const { familyId } = useParams();
     const navigate = useNavigate();
     const { showToast } = useToast();

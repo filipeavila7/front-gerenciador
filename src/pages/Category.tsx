@@ -39,6 +39,7 @@ import "../styles/purchaseModals.css";
 import type { CategoryResponse } from "../types/category/CategoryResponse";
 import type { CategoryRequest } from "../types/category/CategoryRequest";
 import type { CategoryUpdateRequest } from "../types/category/CategoryUpdateRequest";
+import { useScrollPosition } from "../hooks/useScrollRestoration";
 
 const PAGE_SIZE = 36;
 const DEBOUNCE_MS = 400;
@@ -55,6 +56,7 @@ function getIconForCategory(name: string | undefined | null) {
 }
 
 function Category() {
+    useScrollPosition("category");
     const { familyId } = useParams();
     const { showToast } = useToast();
 
