@@ -170,7 +170,7 @@ function ProductGraphic({
                                     >
 
                                         {
-                                            chartData.map((entry,index)=>(
+                                            chartData.map((entry, index) => (
 
                                                 <Cell
                                                     key={index}
@@ -188,33 +188,27 @@ function ProductGraphic({
                                     <Tooltip
 
                                         contentStyle={{
-                                            backgroundColor:"#14152b",
-                                            border:"1px solid #a5a3ab57",
-                                            borderRadius:"10px",
-                                            color:"#ffffff"
+                                            backgroundColor: "#14152b",
+                                            border: "1px solid #a5a3ab57",
+                                            borderRadius: "10px",
+                                            color: "#ffffff"
                                         }}
 
                                         itemStyle={{
-                                            color:"#bcadf2"
+                                            color: "#bcadf2"
                                         }}
 
 
-                                        formatter={(value)=>{
+                                        formatter={(value, name) => {
 
-                                            const numericValue =
-                                                Number(value ?? 0);
+                                            const numericValue = Number(value ?? 0);
 
+                                            const formatted = numericValue.toLocaleString("pt-BR", {
+                                                style: "currency",
+                                                currency: "BRL"
+                                            });
 
-                                            return [
-                                                numericValue.toLocaleString(
-                                                    "pt-BR",
-                                                    {
-                                                        style:"currency",
-                                                        currency:"BRL"
-                                                    }
-                                                ),
-                                                "Valor"
-                                            ];
+                                            return [formatted, name];
 
                                         }}
 
@@ -257,7 +251,7 @@ function ProductGraphic({
 
 
                             {
-                                chartData.map((entry,index)=>(
+                                chartData.map((entry, index) => (
 
                                     <div
                                         className="graph-legend-row"
@@ -295,8 +289,8 @@ function ProductGraphic({
                                             {entry.value.toLocaleString(
                                                 "pt-BR",
                                                 {
-                                                    style:"currency",
-                                                    currency:"BRL"
+                                                    style: "currency",
+                                                    currency: "BRL"
                                                 }
                                             )}
 

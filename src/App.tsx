@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import FamilySelection from "./pages/FamilySelection";
 import FamilyLayout from "./layouts/FamilyLayout";
-
+import History from "./pages/History";
 import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
 import Purchases from "./pages/Purchases";
@@ -45,6 +45,11 @@ function App() {
             <Route
               path="products"
               element={<Products />}
+            />
+
+            <Route
+              path="history"
+              element={<History />}
             />
 
             <Route

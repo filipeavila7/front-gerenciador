@@ -380,7 +380,7 @@ function Category() {
                 <div className="product-grid">
                     {categories.map(category => {
                         const Icon = getIconForCategory(category.name);
-                        const isMenuOpen = openActionId === category .id;
+                        const isMenuOpen = openActionId === category.id;
                         const isDeleting = deletingId === category.id;
 
                         return (

@@ -26,7 +26,6 @@ interface Props {
     onAdded: () => void;
 }
 
-
 interface CartItem {
     productId: number;
     name: string;
@@ -35,6 +34,7 @@ interface CartItem {
 }
 
 const PAGE_SIZE = 12;
+const DEBOUNCE_MS = 400;
 
 function AddProductModal({ familyId, purchaseId, existingProductIds, onClose, onAdded }: Props) {
 
@@ -42,12 +42,24 @@ function AddProductModal({ familyId, purchaseId, existingProductIds, onClose, on
     const [page, setPage] = useState(0);
     const [loading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
-    const [search, setSearch] = useState("");
+
+    const [searchInput, setSearchInput] = useState("");
+    const [debouncedSearch, setDebouncedSearch] = useState("");
 
     const [cart, setCart] = useState<Map<number, CartItem>>(new Map());
     const [submitting, setSubmitting] = useState(false);
 
     const requestIdRef = useRef(0);
+
+    // debounce da busca por nome — só atualiza o termo "de verdade" após o usuário parar de digitar
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearch(searchInput);
+            setPage(0); // toda vez que o filtro muda, volta pra primeira página
+        }, DEBOUNCE_MS);
+
+        return () => clearTimeout(timer);
+    }, [searchInput]);
 
     useEffect(() => {
         let ignore = false;
@@ -56,10 +68,18 @@ function AddProductModal({ familyId, purchaseId, existingProductIds, onClose, on
         async function loadProducts() {
             setLoading(true);
 
+            const hasFilter = debouncedSearch.trim().length > 0;
+
             try {
                 const res = await api.get<PageResponse<ProductResponse>>(
-                    `/products/my/family/${familyId}`,
-                    { params: { page, size: PAGE_SIZE } }
+                    hasFilter
+                        ? `/products/my/family/${familyId}/search`
+                        : `/products/my/family/${familyId}`,
+                    {
+                        params: hasFilter
+                            ? { name: debouncedSearch.trim(), page, size: PAGE_SIZE }
+                            : { page, size: PAGE_SIZE }
+                    }
                 );
 
                 if (!ignore && currentRequestId === requestIdRef.current) {
@@ -75,13 +95,9 @@ function AddProductModal({ familyId, purchaseId, existingProductIds, onClose, on
         loadProducts();
 
         return () => { ignore = true; };
-    }, [familyId, page]);
+    }, [familyId, page, debouncedSearch]);
 
     const products = pageData?.content ?? [];
-
-    const filteredProducts = search.trim()
-        ? products.filter(p => p.name.toLowerCase().includes(search.trim().toLowerCase()))
-        : products;
 
     function addToCart(product: ProductResponse) {
         setCart(prev => {
@@ -170,8 +186,8 @@ function AddProductModal({ familyId, purchaseId, existingProductIds, onClose, on
                     <input
                         type="text"
                         placeholder="Buscar produto..."
-                        value={search}
-                        onChange={e => setSearch(e.target.value)}
+                        value={searchInput}
+                        onChange={e => setSearchInput(e.target.value)}
                     />
                 </div>
 
@@ -181,13 +197,13 @@ function AddProductModal({ familyId, purchaseId, existingProductIds, onClose, on
 
                         {loading && !pageData ? (
                             <div className="modal-empty"><p>Carregando produtos...</p></div>
-                        ) : filteredProducts.length === 0 ? (
+                        ) : products.length === 0 ? (
                             <div className="modal-empty">
                                 <FaBoxOpen className="empty-icon" />
                                 <p>Nenhum produto encontrado.</p>
                             </div>
                         ) : (
-                            filteredProducts.map(product => {
+                            products.map(product => {
                                 const inCart = cart.has(product.id);
                                 const alreadyInPurchase = existingProductIds.includes(product.id);
                                 const isDisabled = inCart || alreadyInPurchase;
