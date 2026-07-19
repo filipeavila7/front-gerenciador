@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom"
 import api from "../../service/api"
-import type { TransactionResponse, TransactionType } from "../../types/transaction/TransactionResponse"
+import type { TransactionResponse, } from "../../types/transaction/TransactionResponse"
 import { useState, useEffect } from "react"
+import type { TransactionType } from "../../types/transaction/TransactionType"
 import type { PageResponse } from "../../types/pagination/PageResponse";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { formatDate } from "../utils/FormatDate";
@@ -45,33 +46,33 @@ function TransactionHistory() {
         <>
             <div className="history-lay">
                 <p className="title-2">Transações recentes</p>
-            
-            <div className="transaction-history-box">
 
-                {transactions?.content.map((t) => (
-                    <div className="transaction-history" key={t.id}>
+                <div className="transaction-history-box">
 
-                        <div className="transaction-info">
-                            <div className="transaction-history-icon-box">
-                                <TransactionIcon type={t.type} />
+                    {transactions?.content.map((t) => (
+                        <div className="transaction-history" key={t.id}>
+
+                            <div className="transaction-info">
+                                <div className="transaction-history-icon-box">
+                                    <TransactionIcon type={t.type} />
+                                </div>
+
+                                <div>
+                                    <p className="transaction-title">{t.title}</p>
+                                    <p className="transaction-date">{formatDate(t.dateTime)}</p>
+                                </div>
                             </div>
 
-                            <div>
-                                <p className="transaction-title">{t.title}</p>
-                                <p className="transaction-date">{formatDate(t.dateTime)}</p>
+
+                            <div className="transaction-value">
+                                <p>
+                                    {t.type === "EXPENSE" ? "-" : "+"} R$ {t.ammount.toFixed(2)}
+                                </p>
                             </div>
+
                         </div>
-
-
-                        <div className="transaction-value">
-                            <p>
-                                R$ {t.ammount.toFixed(2)}
-                            </p>
-                        </div>
-
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
             </div>
         </>
     )

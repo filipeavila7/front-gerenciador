@@ -1,0 +1,349 @@
+.family-empty{
+    color: #a5a3ab;
+    text-align: center;
+    padding: 40px 0;
+}
+
+/* ===== card principal ===== */
+.family-hero-card{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #1b1d38;
+    border: 1px solid #a5a3ab57;
+    border-radius: 18px;
+    padding: 24px;
+    margin-bottom: 32px;
+}
+
+.family-hero-avatar{
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    background: rgba(188, 173, 242, 0.15);
+    border: 2px solid #6f6ab84d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.family-hero-avatar img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.family-hero-avatar-fallback{
+    font-size: 32px;
+    color: #bcadf2;
+}
+
+.family-hero-info{
+    flex: 1;
+    min-width: 0;
+}
+
+.family-hero-info h2{
+    margin: 0 0 6px 0;
+    font-size: 1.5rem;
+    color: #ffffff;
+}
+
+.family-hero-meta{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #a5a3ab;
+}
+
+.family-hero-dot{
+    color: #565173;
+}
+
+.family-edit-btn{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1px solid #6f6ab866;
+    color: #bcadf2;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s ease;
+}
+
+.family-edit-btn:hover{
+    background: rgba(188, 173, 242, 0.1);
+}
+
+/* ===== seção de membros ===== */
+.family-section-title{
+    color: #bcadf2;
+    font-size: 1.1rem;
+    margin: 0 0 16px 0;
+}
+
+.family-members-section{
+    margin-bottom: 32px;
+}
+
+.family-members-list{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.family-member-row{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #1b1d38;
+    border: 1px solid #a5a3ab57;
+    border-radius: 14px;
+    padding: 14px 18px;
+    transition: border-color 0.2s ease, opacity 0.2s ease;
+}
+
+.family-member-row:hover{
+    border-color: #6f6ab8;
+}
+
+.family-member-removing{
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.family-member-avatar{
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(188, 173, 242, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #bcadf2;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.family-member-avatar img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.family-member-info{
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.family-member-name-row{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.family-member-name{
+    font-size: 14px;
+    color: #ffffff;
+}
+
+.family-member-admin-badge{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #E8F994;
+    background: rgba(232, 249, 148, 0.15);
+    padding: 2px 9px;
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
+.family-member-joined{
+    font-size: 12px;
+    color: #a5a3ab;
+}
+
+.family-member-action-wrapper{
+    position: relative;
+}
+
+.family-member-dots-btn{
+    background: transparent;
+    border: none;
+    color: #a5a3ab;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 6px;
+    border-radius: 6px;
+}
+
+.family-member-dots-btn:hover{
+    background: #24264a;
+    color: #ffffff;
+}
+
+.family-member-dots-btn:disabled{
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.family-member-menu{
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    background: #1b1d38;
+    border: 1px solid #a5a3ab57;
+    border-radius: 10px;
+    padding: 6px;
+    min-width: 170px;
+    z-index: 30;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    animation: actionMenuIn 0.15s ease;
+}
+
+/* ===== zona de perigo ===== */
+.family-danger-zone{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    background: rgba(255, 107, 107, 0.06);
+    border: 1px solid rgba(255, 107, 107, 0.25);
+    border-radius: 16px;
+    padding: 20px 24px;
+}
+
+.family-danger-info h3{
+    margin: 0 0 4px 0;
+    color: #ff8080;
+    font-size: 1rem;
+}
+
+.family-danger-info p{
+    margin: 0;
+    color: #a5a3ab;
+    font-size: 13px;
+    max-width: 480px;
+}
+
+.family-exit-btn{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1px solid #ff6b6b66;
+    color: #ff8080;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s ease;
+}
+
+.family-exit-btn:hover:not(:disabled){
+    background: rgba(255, 107, 107, 0.1);
+}
+
+.family-exit-btn:disabled{
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.exit-warning-text{
+    color: #d8d2f0;
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 16px 0;
+}
+
+.exit-warning-text strong{
+    color: #ffffff;
+}
+
+.modal-confirm-btn-danger{
+    background: #ff6b6b !important;
+    color: #1b1d38 !important;
+}
+
+/* ===== upload de imagem no modal ===== */
+.image-upload-box{
+    position: relative;
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    align-self: center;
+    cursor: pointer;
+    overflow: hidden;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.image-upload-preview{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-upload-placeholder{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(188, 173, 242, 0.15);
+    color: #bcadf2;
+    font-size: 26px;
+}
+
+.image-upload-overlay{
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 16px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.image-upload-box:hover .image-upload-overlay{
+    opacity: 1;
+}
+
+/* ===== responsividade ===== */
+@media (max-width: 700px){
+    .family-hero-card{
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .family-edit-btn{
+        width: 100%;
+        justify-content: center;
+    }
+
+    .family-danger-zone{
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+
+    .family-exit-btn{
+        justify-content: center;
+    }
+}
