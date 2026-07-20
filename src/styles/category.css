@@ -267,3 +267,43 @@
     .category-grid{ grid-template-columns: repeat(2, 1fr); }
 }
 
+@media (max-width: 900px){
+    .category-lay{
+        padding-top: 0;
+    }
+
+    .categories-header,
+    .category-toolbar{
+        position: static;
+    }
+
+    .categories-header{
+        align-items: stretch;
+        flex-direction: column;
+        padding-top: 8px;
+    }
+
+    .category-title-box h1{
+        font-size: 1.75rem;
+    }
+
+    .category-header-actions,
+    .category-sort{
+        align-items: stretch;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .category-search,
+    .new-category-btn{
+        min-width: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 560px){
+    .category-title-box h1{
+        font-size: 1.55rem;
+    }
+}
+

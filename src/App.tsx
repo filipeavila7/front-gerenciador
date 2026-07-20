@@ -16,92 +16,143 @@ import ShoppingList from "./pages/ShoppingList";
 import ShoppingListItems from "./pages/ShoppingListItems";
 import Graphics from "./pages/Graphics";
 import Family from "./pages/Family";
+import InvitePage from "./pages/InvitePage";
+import Settings from "./pages/Settings";
+import { AuthProvider } from "./context/AuthContext";
+import PrivateRoute from "./routes/PrivateRoute";
+
 
 function App() {
   return (
     <ToastProvider>
-      <BrowserRouter>
-        <Routes>
-          {/* Tela sem sidebar */}
-          <Route
-            path="/families"
-            element={<FamilySelection />}
-          />
 
-          <Route
-            path="/"
-            element={<Login />}
-          />
+      <AuthProvider>
 
-          {/* Tudo aqui dentro tem sidebar */}
-          <Route
-            path="/family/:familyId"
-            element={<FamilyLayout />}
-          >
+        <BrowserRouter>
+
+          <Routes>
+
+            {/* Tela sem sidebar */}
             <Route
-              path="dashboard"
-              element={<Dashboard />}
+              path="/families"
+              element={
+                <PrivateRoute>
+                  <FamilySelection />
+                </PrivateRoute>
+              }
             />
 
-            <Route
-              path="products"
-              element={<Products />}
-            />
 
             <Route
-              path="family"
-              element={<Family />}
+              path="/"
+              element={<Login />}
             />
 
-            <Route
-              path="history"
-              element={<History />}
-            />
 
             <Route
-              path="category"
-              element={<Category />}
+              path="/invite/:token"
+              element={<InvitePage />}
             />
 
-            <Route
-              path="purchases"
-              element={<Purchases />}
-            />
 
+            {/* Tudo aqui dentro precisa estar logado */}
             <Route
-              path="graphics"
-              element={<Graphics />}
-            />
+              path="/family/:familyId"
+              element={
+                <PrivateRoute>
+                  <FamilyLayout />
+                </PrivateRoute>
+              }
+            >
 
-            <Route
-              path="transaction"
-              element={<Transaction />}
-            />
+              <Route
+                path="dashboard"
+                element={<Dashboard />}
+              />
 
-            <Route
-              path="shopping-list"
-              element={<ShoppingList />}
-            />
-            
-            <Route
-              path="shopping-list/:shoppingListId"
-              element={<ShoppingListItems />}
-            />
 
-            <Route
-              path="purchases/:purchaseId"
-              element={<PurchaseItens />}
-            />
+              <Route
+                path="products"
+                element={<Products />}
+              />
 
-            <Route
-              path="transaction/:transactionId"
-              element={<TransactionDetails />}
-            />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+
+              <Route
+                path="family"
+                element={<Family />}
+              />
+
+
+              <Route
+                path="settings"
+                element={<Settings />}
+              />
+
+
+              <Route
+                path="history"
+                element={<History />}
+              />
+
+
+              <Route
+                path="category"
+                element={<Category />}
+              />
+
+
+              <Route
+                path="purchases"
+                element={<Purchases />}
+              />
+
+
+              <Route
+                path="graphics"
+                element={<Graphics />}
+              />
+
+
+              <Route
+                path="transaction"
+                element={<Transaction />}
+              />
+
+
+              <Route
+                path="shopping-list"
+                element={<ShoppingList />}
+              />
+
+
+              <Route
+                path="shopping-list/:shoppingListId"
+                element={<ShoppingListItems />}
+              />
+
+
+              <Route
+                path="purchases/:purchaseId"
+                element={<PurchaseItens />}
+              />
+
+
+              <Route
+                path="transaction/:transactionId"
+                element={<TransactionDetails />}
+              />
+
+            </Route>
+
+          </Routes>
+
+        </BrowserRouter>
+
+      </AuthProvider>
+
     </ToastProvider>
   );
 }
+
 
 export default App;

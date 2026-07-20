@@ -23,10 +23,9 @@
 @media (max-width: 600px){
     .dashboard-lay{
         grid-template-columns: 1fr;
+        padding-top: 14px;
     }
-    .graph-card{
-        grid-column: span 1;
-    }
+    
 }
 
 .dashboard-header{
@@ -131,6 +130,29 @@
 .btn-header-box button:disabled {
     opacity: .3;
     cursor: not-allowed;
+}
+
+@media (max-width: 900px){
+    .dashboard-header{
+        align-items: stretch;
+        flex-direction: column;
+        gap: 14px;
+        position: static;
+    }
+
+    .header-actions{
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .btn-header-box{
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .btn-header-box span{
+        min-width: 0;
+    }
 }
 
 .balance-box{

@@ -13,9 +13,13 @@ import { CiCircleList } from "react-icons/ci";
 
 type Props = {
     familyId: string;
+    onNavigate?: () => void;
 };
 
-function SideBar({ familyId }: Props) {
+function SideBar({
+    familyId,
+    onNavigate
+}: Props) {
 
     const menuItems = [
         {
@@ -87,6 +91,7 @@ function SideBar({ familyId }: Props) {
                         <li key={item.path}>
                             <NavLink
                                 to={item.path}
+                                onClick={onNavigate}
                                 className={({ isActive }) =>
                                     `nav-item ${isActive ? "active" : ""}`
                                 }

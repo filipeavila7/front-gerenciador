@@ -683,6 +683,44 @@
     }
 }
 
+@media (max-width: 900px){
+    .purchases-header,
+    .purchases-toolbar{
+        position: static;
+    }
+
+    .purchases-toolbar{
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .purchases-sort{
+        align-items: stretch;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .sort-btn,
+    .date-filter-wrapper,
+    .calendar-btn{
+        width: 100%;
+    }
+
+    .date-filter-popover,
+    .sort-dropdown-menu{
+        left: 0;
+        min-width: 0;
+        right: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 560px){
+    .purchases-title-box h1{
+        font-size: 1.55rem;
+    }
+}
+
 
 .purchase-itens-lay{
     margin-top: 30px;

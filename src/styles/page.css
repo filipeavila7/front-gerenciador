@@ -75,3 +75,58 @@
     background: #14152b;
     padding: 20px 0;
 }
+
+@media (max-width: 900px){
+    .page-lay,
+    .product-lay,
+    .graphic-lay{
+        padding-top: 0;
+    }
+
+    .page-header,
+    .product-header,
+    .page-toolbar,
+    .product-toolbar{
+        position: static;
+    }
+
+    .page-header,
+    .product-header{
+        align-items: stretch;
+        flex-direction: column;
+        padding-top: 8px;
+    }
+
+    .page-title-box h1,
+    .product-title-box h1{
+        font-size: 1.75rem;
+    }
+
+    .page-header-actions,
+    .product-header-actions,
+    .product-sort{
+        align-items: stretch;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .page-search,
+    .product-search,
+    .filter-dropdown-trigger,
+    .new-product-btn{
+        min-width: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 560px){
+    .page-title-box h1,
+    .product-title-box h1{
+        font-size: 1.55rem;
+    }
+
+    .page-header,
+    .product-header{
+        gap: 14px;
+    }
+}

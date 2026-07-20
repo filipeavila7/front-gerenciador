@@ -173,6 +173,14 @@
     color: #eef299;
 }
 
+.f-img{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+
+}
+
 .family-card h2{
     color: #cabdf5;
     font-size: 1.2rem;

@@ -255,3 +255,38 @@
 @media (max-width: 550px){
     .shopping-list-grid{ grid-template-columns: 1fr; }
 }
+
+@media (max-width: 900px){
+    .shopping-list-lay{
+        padding-top: 0;
+    }
+
+    .shopping-list-header{
+        align-items: stretch;
+        flex-direction: column;
+        padding-top: 8px;
+        position: static;
+    }
+
+    .shopping-list-title-box h1{
+        font-size: 1.75rem;
+    }
+
+    .shopping-list-header-actions{
+        align-items: stretch;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .shopping-list-search,
+    .new-list-btn{
+        min-width: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 560px){
+    .shopping-list-title-box h1{
+        font-size: 1.55rem;
+    }
+}

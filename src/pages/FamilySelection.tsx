@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import type { FamilyResponse } from "../types/family/FamilyResponse"
 import api from "../service/api";
 import "../styles/familieSelection.css";
@@ -6,6 +6,10 @@ import { useNavigate } from "react-router-dom";
 import type { UserResponse } from "../types/user/UserResponse";
 import { getErrorMessage } from "../components/utils/GetErrorMessage";
 import type { PageResponse } from "../types/pagination/PageResponse";
+import { useToast } from "../context/ToastContext";
+import type { FamilyRequest } from "../types/family/FamilyTypeResquest";
+import { FaTimes, FaCamera, FaUser } from "react-icons/fa";
+
 
 const VISIBLE_CARDS = 4;
 
@@ -40,6 +44,19 @@ export default function FamilySelection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedId, setSelectedId] = useState<number | string | null>(null);
   const [user, setUser] = useState<UserResponse | null>(null);
+  const { showToast } = useToast();
+
+
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [newFamily, setNewFamily] = useState<FamilyRequest>({ name: "", profileImg: "" });
+  const [creating, setCreating] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
+
+  // ===== upload de imagem da nova família =====
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
 
   async function loadFamilies() {
     const res = await api.get<PageResponse<FamilyResponse>>("/families/my");
@@ -84,24 +101,141 @@ export default function FamilySelection() {
 
   function handleSelect(id: number | string) {
     setSelectedId(id);
-
-
-
-
   }
 
   function selectFamily(id: number | string) {
     setSelectedId(id);
-
     navigate(`/family/${id}/dashboard`);
+  }
 
 
+  function openCreateModal() {
+    setNewFamily({ name: "", profileImg: "" });
+    setImageFile(null);
+    setImagePreview(null);
+    setIsCreateOpen(true);
+  }
+
+  function closeCreateModal() {
+    setIsCreateOpen(false);
+    setImageFile(null);
+    setImagePreview(null);
+  }
+
+  function handleImageSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  }
+
+
+  async function handleCreateCategory(
+    e: React.FormEvent<HTMLFormElement>
+  ) {
+    e.preventDefault();
+
+    setCreating(true);
+
+    try {
+      let profileImgUrl = "";
+
+      if (imageFile) {
+        setUploadingImage(true);
+
+        const formData = new FormData();
+        formData.append("image", imageFile);
+
+        const uploadRes = await api.post<string>("/upload", formData, {
+          headers: { "Content-Type": "multipart/form-data" }
+        });
+
+        profileImgUrl = uploadRes.data;
+        setUploadingImage(false);
+      }
+
+      await api.post(
+        `/families/new`,
+        { ...newFamily, profileImg: profileImgUrl }
+      );
+
+      showToast("success", "Família criada com sucesso!");
+      closeCreateModal();
+      loadFamilies()
+
+    } catch (err) {
+      showToast("error", getErrorMessage(err));
+    } finally {
+      setCreating(false);
+      setUploadingImage(false);
+    }
   }
 
 
 
   return (
     <div className="family-lay">
+
+      {isCreateOpen && (
+        <div className="modal-overlay" onClick={closeCreateModal}>
+          <div className="modal-box" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>Nova família</h2>
+              <button className="modal-close-btn" onClick={closeCreateModal}>
+                <FaTimes />
+              </button>
+            </div>
+
+            <div className="form-purchase-modal">
+              <div className="purchase-form-box">
+                <form className="purchase-form" onSubmit={handleCreateCategory}>
+
+                  <label className="image-upload-box">
+                    {imagePreview ? (
+                      <img src={imagePreview} alt="Preview" className="image-upload-preview" />
+                    ) : (
+                      <div className="image-upload-placeholder">
+                        <FaUser />
+                      </div>
+                    )}
+
+                    <div className="image-upload-overlay">
+                      <FaCamera />
+                    </div>
+
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageSelect}
+                      hidden
+                    />
+                  </label>
+
+                  <input
+                    type="text"
+                    value={newFamily.name}
+                    onChange={(e) =>
+                      setNewFamily({ ...newFamily, name: e.target.value })
+                    }
+                    placeholder="Nome da família"
+                    required
+                  />
+
+                  <button className="modal-confirm-btn" type="submit" disabled={creating}>
+                    {uploadingImage ? "Enviando foto..." : creating ? "Criando..." : "Criar família"}
+                  </button>
+
+                  <button type="button" onClick={closeCreateModal} className="modal-cancel-btn">
+                    Cancelar
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* estrelas decorativas */}
       <span className="deco-star star-1">★</span>
@@ -116,7 +250,7 @@ export default function FamilySelection() {
           <h2>Olá {user?.name}, Selecione sua <span className="highlight">Família</span></h2>
           <p>Escolha a família que deseja acessar para gerenciar seus gastos.</p>
         </div>
-        <button className="create-family-btn">
+        <button onClick={openCreateModal} className="create-family-btn">
           <span className="plus-icon">+</span> Criar nova família
         </button>
       </div>
@@ -158,7 +292,11 @@ export default function FamilySelection() {
                   )}
 
                   <div className={`family-icon-box ${isSelected ? "icon-selected" : ""}`}>
-                    {ICONS[i % ICONS.length]}
+                    {f.profileImg ? (
+                      <img className="f-img" src={f.profileImg} alt="" />
+                    ) : (
+                      ICONS[i % ICONS.length]
+                    )}
                   </div>
 
                   <h2>{f.name}</h2>

@@ -1,0 +1,1 @@
+export type  InviteStatus = "PENDING" | "ACCEPTED" | "CANCELLED" | "EXPIRED"

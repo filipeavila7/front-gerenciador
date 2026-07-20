@@ -9,7 +9,11 @@ import {
     Tooltip,
     Cell
 } from "recharts";
-import { useEffect, useState } from "react";
+import {
+    useCallback,
+    useEffect,
+    useState
+} from "react";
 import api from "../../service/api";
 
 interface Props {
@@ -51,11 +55,7 @@ export default function TransactionExpenseChart({
     const [data, setData] = useState<TransactionMonthResponse[]>([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        loadData();
-    }, [familyId, year]);
-
-    async function loadData() {
+    const loadData = useCallback(async () => {
         setLoading(true);
 
         try {
@@ -84,7 +84,12 @@ export default function TransactionExpenseChart({
         } finally {
             setLoading(false);
         }
-    }
+    }, [familyId, year]);
+
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        loadData();
+    }, [loadData]);
 
     if (loading) {
         return (
@@ -102,69 +107,73 @@ export default function TransactionExpenseChart({
                 <span>{year}</span>
             </div>
 
-            <ResponsiveContainer width="100%" height={350}>
+            <div className="transaction-chart-scroll">
+                <div className="transaction-chart-canvas">
+                    <ResponsiveContainer width="100%" height={350}>
 
-                <BarChart
-                    data={data}
-                    margin={{
-                        top: 20,
-                        right: 20,
-                        left: 5,
-                        bottom: 5
-                    }}
-                >
+                        <BarChart
+                            data={data}
+                            margin={{
+                                top: 20,
+                                right: 20,
+                                left: 5,
+                                bottom: 5
+                            }}
+                        >
 
-                    <CartesianGrid
-                        strokeDasharray="4 4"
-                        vertical={false}
-                    />
-
-                    <XAxis
-                        dataKey="month"
-                        tickFormatter={(value) => MONTHS[value - 1]}
-                        tick={{ fill: "#B7B7C9" }}
-                        axisLine={false}
-                        tickLine={false}
-                    />
-
-                    <YAxis 
-                         width={90}
-                        domain={[0, (dataMax: number) => Math.max(10000, Math.ceil(dataMax / 1000) * 1000)]}
-                        tick={{ fill: "#B7B7C9" }}
-                        axisLine={false}
-                        tickLine={false}
-                        tickFormatter={(value) =>
-                            `R$ ${value.toLocaleString("pt-BR")}`
-                        }
-                    />
-
-                    <Tooltip
-                        cursor={{ fill: "rgba(165,148,249,.15)" }}
-                        formatter={(value: number) =>
-                            `R$ ${value.toLocaleString("pt-BR", {
-                                minimumFractionDigits: 2
-                            })}`
-                        }
-                        labelFormatter={(label) => MONTHS[label - 1]}
-                    />
-
-                    <Bar
-                        dataKey="total"
-                        radius={[10, 10, 0, 0]}
-                        animationDuration={1400}
-                        animationEasing="ease-out"
-                    >
-                        {data.map((_, index) => (
-                            <Cell
-                                key={index}
-                                fill={COLORS[index % COLORS.length]}
+                            <CartesianGrid
+                                strokeDasharray="4 4"
+                                vertical={false}
                             />
-                        ))}
-                    </Bar>
 
-                </BarChart>
+                            <XAxis
+                                dataKey="month"
+                                tickFormatter={(value) => MONTHS[value - 1]}
+                                tick={{ fill: "#B7B7C9" }}
+                                axisLine={false}
+                                tickLine={false}
+                            />
 
-            </ResponsiveContainer>
+                            <YAxis
+                                width={90}
+                                domain={[0, (dataMax: number) => Math.max(10000, Math.ceil(dataMax / 1000) * 1000)]}
+                                tick={{ fill: "#B7B7C9" }}
+                                axisLine={false}
+                                tickLine={false}
+                                tickFormatter={(value) =>
+                                    `R$ ${value.toLocaleString("pt-BR")}`
+                                }
+                            />
+
+                            <Tooltip
+                                cursor={{ fill: "rgba(165,148,249,.15)" }}
+                                formatter={(value) =>
+                                    `R$ ${Number(value ?? 0).toLocaleString("pt-BR", {
+                                        minimumFractionDigits: 2
+                                    })}`
+                                }
+                                labelFormatter={(label) => MONTHS[Number(label) - 1]}
+                            />
+
+                            <Bar
+                                dataKey="total"
+                                radius={[10, 10, 0, 0]}
+                                animationDuration={1400}
+                                animationEasing="ease-out"
+                            >
+                                {data.map((_, index) => (
+                                    <Cell
+                                        key={index}
+                                        fill={COLORS[index % COLORS.length]}
+                                    />
+                                ))}
+                            </Bar>
+
+                        </BarChart>
+
+                    </ResponsiveContainer>
+                </div>
+            </div>
 
         </div>
     );
