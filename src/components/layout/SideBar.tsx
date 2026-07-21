@@ -9,6 +9,8 @@ import { GoGraph } from "react-icons/go";
 import { HiOutlineCog } from "react-icons/hi";
 import { FaStar } from "react-icons/fa";
 import { CiCircleList } from "react-icons/ci";
+import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 
 type Props = {
@@ -20,6 +22,8 @@ function SideBar({
     familyId,
     onNavigate
 }: Props) {
+
+    const navigate = useNavigate()
 
     const menuItems = [
         {
@@ -80,6 +84,11 @@ function SideBar({
             <nav className="nav-links">
 
                 <div className="nav-title">
+                    <div className="voltar-box-2" onClick={() =>  navigate("/families")}>
+                        <MdOutlineKeyboardArrowLeft className="voltar-arr" />
+                    
+                    </div>
+                    
                     <p>
                         Ametis<span className="color2">ty</span>{" "}
                         <FaStar className="nav-title-icon" />

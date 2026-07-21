@@ -49,12 +49,12 @@ function Settings() {
 
 
     return (
-        <section className="settings-page">
-            <header className="settings-header">
-                <div>
+        <section className="page-lay">
+            <header  className="page-header">
+                <div className="page-title-box">
                     <h1>
-                        <FiSettings />
-                        Configuracoes
+                        
+                        Configurações
                     </h1>
                     <p>Gerencie sua sessao e preferencias da conta.</p>
                 </div>

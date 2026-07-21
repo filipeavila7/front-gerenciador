@@ -9,6 +9,7 @@ import type { PageResponse } from "../types/pagination/PageResponse";
 import { useToast } from "../context/ToastContext";
 import type { FamilyRequest } from "../types/family/FamilyTypeResquest";
 import { FaTimes, FaCamera, FaUser } from "react-icons/fa";
+import { HiOutlineCog } from "react-icons/hi";
 
 
 const VISIBLE_CARDS = 4;
@@ -185,6 +186,7 @@ export default function FamilySelection() {
               <button className="modal-close-btn" onClick={closeCreateModal}>
                 <FaTimes />
               </button>
+              
             </div>
 
             <div className="form-purchase-modal">
@@ -250,9 +252,15 @@ export default function FamilySelection() {
           <h2>Olá {user?.name}, Selecione sua <span className="highlight">Família</span></h2>
           <p>Escolha a família que deseja acessar para gerenciar seus gastos.</p>
         </div>
+        <div className="lay-btn">
         <button onClick={openCreateModal} className="create-family-btn">
           <span className="plus-icon">+</span> Criar nova família
         </button>
+        <div onClick={()=> navigate("/me")} className="config-box">
+          <HiOutlineCog className="config" />
+        </div>
+        
+        </div>
       </div>
 
       <div className="family-carousel-wrapper">

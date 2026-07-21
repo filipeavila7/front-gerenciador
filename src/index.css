@@ -13,7 +13,7 @@
 
 
 body{
-    background: linear-gradient(180deg, #13102f, #0b0920);
+    background: radial-gradient(circle at 20% 0%, #241a3d 0%, transparent 45%), radial-gradient(circle at 80% 100%, #1a1a3d 0%, transparent 45%), #0e0a1f;
     background-attachment: fixed;
     color: #ffffff;
     overflow-x: hidden;

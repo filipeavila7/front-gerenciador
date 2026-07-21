@@ -1,33 +1,104 @@
-.family-lay{
+.family-lay {
     position: relative;
     width: 100%;
     min-height: 100vh;
     padding: 60px 8vw;
     background: radial-gradient(circle at 15% 10%, #241a3d 0%, transparent 45%),
-                radial-gradient(circle at 85% 15%, #2a1a45 0%, transparent 40%),
-                #0e0a1f;
+        radial-gradient(circle at 85% 15%, #2a1a45 0%, transparent 40%),
+        #0e0a1f;
     background-attachment: fixed;
     overflow: hidden;
     box-sizing: border-box;
 }
 
+.lay-btn {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.config {
+    color: rgb(239, 239, 244);
+    font-size: 35px;
+    cursor: pointer;
+}
+
+.config-box {
+    cursor: pointer;
+    border-radius: 100px;
+    
+    display: flex;
+    padding: 5px;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.config-box:hover {
+    background: linear-gradient(145deg, #E8F994 0%, #A594F9 100%);
+    
+}
+
+.config-box:hover .config {
+    color: rgb(107, 103, 103);
+    
+}
+
+
+
+
+
+
 /* ===== estrelas decorativas ===== */
-.deco-star{
+.deco-star {
     position: absolute;
     color: #d4c9f7;
     opacity: 0.8;
     pointer-events: none;
     user-select: none;
 }
-.star-1{ top: 6%; left: 8%; font-size: 18px; color: #f5f28a; }
-.star-2{ top: 7%; right: 12%; font-size: 22px; }
-.star-3{ top: 16%; left: 60%; font-size: 12px; color: #f5f28a; }
-.star-4{ top: 50%; left: 3%; font-size: 14px; }
-.star-5{ top: 52%; right: 5%; font-size: 16px; color: #f5f28a; }
-.star-6{ bottom: 8%; left: 24%; font-size: 14px; }
+
+.star-1 {
+    top: 6%;
+    left: 8%;
+    font-size: 18px;
+    color: #f5f28a;
+}
+
+.star-2 {
+    top: 7%;
+    right: 12%;
+    font-size: 22px;
+}
+
+.star-3 {
+    top: 16%;
+    left: 60%;
+    font-size: 12px;
+    color: #f5f28a;
+}
+
+.star-4 {
+    top: 50%;
+    left: 3%;
+    font-size: 14px;
+}
+
+.star-5 {
+    top: 52%;
+    right: 5%;
+    font-size: 16px;
+    color: #f5f28a;
+}
+
+.star-6 {
+    bottom: 8%;
+    left: 24%;
+    font-size: 14px;
+}
 
 /* ===== header ===== */
-.family-header{
+.family-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -40,7 +111,7 @@
 
 
 
-.family-title h2{
+.family-title h2 {
     margin: 0;
     font-size: 2.4rem;
     font-weight: 800;
@@ -50,19 +121,19 @@
     color: transparent;
 }
 
-.family-title h2 .highlight{
+.family-title h2 .highlight {
     background: linear-gradient(90deg, #cbb8ff, #f2f19a);
     -webkit-background-clip: text;
     background-clip: text;
 }
 
-.family-title p{
+.family-title p {
     margin-top: 8px;
     color: #a79ecb;
     font-size: 1rem;
 }
 
-.create-family-btn{
+.create-family-btn {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -77,18 +148,18 @@
     transition: background 0.2s ease, border-color 0.2s ease;
 }
 
-.create-family-btn:hover{
+.create-family-btn:hover {
     background: #201a3a;
     border-color: #6c62a3;
 }
 
-.plus-icon{
+.plus-icon {
     font-size: 1.1rem;
     line-height: 1;
 }
 
 /* ===== carrossel ===== */
-.family-carousel-wrapper{
+.family-carousel-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -97,19 +168,19 @@
     z-index: 1;
 }
 
-.family-carousel-track{
+.family-carousel-track {
     overflow: hidden;
     width: 100%;
 }
 
-.family-box{
+.family-box {
     display: flex;
     gap: 24px;
     transition: transform 0.4s ease;
 }
 
 /* ===== card ===== */
-.family-card{
+.family-card {
     background: linear-gradient(180deg, #1c1738, #14112a);
     border: 1.5px solid #2c2650;
     flex: 0 0 calc(25% - 18px);
@@ -124,22 +195,22 @@
     transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
 }
 
-.family-card:hover{
+.family-card:hover {
     transform: translateY(-4px);
     border-color: #4a4370;
 }
 
-.family-card-selected{
+.family-card-selected {
     border: 2px solid #eef299;
     box-shadow: 0 0 25px rgba(238, 242, 153, 0.25);
 }
 
-.family-card-selected:hover{
+.family-card-selected:hover {
     transform: translateY(0px);
     border: 2px solid #eef299;
 }
 
-.check-badge{
+.check-badge {
     position: absolute;
     top: 16px;
     right: 16px;
@@ -151,9 +222,13 @@
     align-items: center;
     justify-content: center;
 }
-.check-badge svg{ width: 15px; height: 15px; }
 
-.family-icon-box{
+.check-badge svg {
+    width: 15px;
+    height: 15px;
+}
+
+.family-icon-box {
     width: 84px;
     height: 84px;
     border-radius: 50%;
@@ -165,15 +240,19 @@
     color: #b6a8f2;
     margin-bottom: 18px;
 }
-.family-icon-box svg{ width: 34px; height: 34px; }
 
-.family-icon-box.icon-selected{
+.family-icon-box svg {
+    width: 34px;
+    height: 34px;
+}
+
+.family-icon-box.icon-selected {
     background: #23231a;
     border-color: #eef299;
     color: #eef299;
 }
 
-.f-img{
+.f-img {
     width: 80px;
     height: 80px;
     border-radius: 50%;
@@ -181,15 +260,18 @@
 
 }
 
-.family-card h2{
+.family-card h2 {
     color: #cabdf5;
     font-size: 1.2rem;
     margin: 0 0 6px 0;
     text-align: center;
 }
-.family-card-selected h2{ color: #eef299; }
 
-.family-members{
+.family-card-selected h2 {
+    color: #eef299;
+}
+
+.family-members {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -197,9 +279,13 @@
     font-size: 0.9rem;
     margin: 0 0 20px 0;
 }
-.members-icon{ width: 16px; height: 16px; }
 
-.select-btn{
+.members-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.select-btn {
     width: 100%;
     padding: 12px;
     border-radius: 12px;
@@ -211,15 +297,18 @@
     margin-top: auto;
     transition: background 0.2s ease, filter 0.2s ease;
 }
-.select-btn:hover{ filter: brightness(1.15); }
 
-.select-btn-active{
+.select-btn:hover {
+    filter: brightness(1.15);
+}
+
+.select-btn-active {
     background: linear-gradient(90deg, #eef299, #b6a8f2);
     color: #181833;
 }
 
 /* ===== setas ===== */
-.carousel-arrow{
+.carousel-arrow {
     background: #1c1738;
     border: 1.5px solid #2c2650;
     color: #cabdf5;
@@ -234,11 +323,18 @@
     flex-shrink: 0;
     transition: opacity 0.2s ease, border-color 0.2s ease;
 }
-.carousel-arrow:hover:not(:disabled){ border-color: #6c62a3; }
-.carousel-arrow:disabled{ opacity: 0.3; cursor: default; }
+
+.carousel-arrow:hover:not(:disabled) {
+    border-color: #6c62a3;
+}
+
+.carousel-arrow:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
 
 /* ===== rodapé de privacidade ===== */
-.privacy-note{
+.privacy-note {
     display: flex;
     align-items: center;
     gap: 14px;
@@ -252,55 +348,85 @@
     position: relative;
     z-index: 1;
 }
-.privacy-note svg{ width: 22px; height: 22px; flex-shrink: 0; color: #8f83bd; }
-.privacy-note p{ margin: 0; font-size: 0.85rem; line-height: 1.4; }
-.privacy-note p:first-child{ font-weight: 600; color: #cabdf5; }
+
+.privacy-note svg {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    color: #8f83bd;
+}
+
+.privacy-note p {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+.privacy-note p:first-child {
+    font-weight: 600;
+    color: #cabdf5;
+}
 
 /* ===================== RESPONSIVIDADE ===================== */
 
 /* tablets */
-@media (max-width: 1024px){
-    .family-card{
+@media (max-width: 1024px) {
+    .family-card {
         flex: 0 0 calc(33.333% - 16px);
     }
-    .family-title h2{ font-size: 2rem; }
+
+    .family-title h2 {
+        font-size: 2rem;
+    }
 }
 
 /* tablets pequenos / celular grande */
-@media (max-width: 768px){
-    .family-lay{ padding: 40px 5vw; }
+@media (max-width: 768px) {
+    .family-lay {
+        padding: 40px 5vw;
+    }
 
-    .family-header{
+    .family-header {
         flex-direction: column;
         align-items: flex-start;
     }
 
-    .create-family-btn{ width: 100%; justify-content: center; }
+    .create-family-btn {
+        width: 100%;
+        justify-content: center;
+    }
 
-    .family-card{
+    .family-card {
         flex: 0 0 calc(50% - 12px);
         padding: 24px 14px;
     }
 
-    .family-box{ gap: 16px; }
+    .family-box {
+        gap: 16px;
+    }
 }
 
 /* celular */
-@media (max-width: 480px){
-    .family-title h2{ font-size: 1.6rem; }
-    .family-title p{ font-size: 0.9rem; }
+@media (max-width: 480px) {
+    .family-title h2 {
+        font-size: 1.6rem;
+    }
 
-    .family-card{
+    .family-title p {
+        font-size: 0.9rem;
+    }
+
+    .family-card {
         flex: 0 0 100%;
     }
 
-    .carousel-arrow{
+    .carousel-arrow {
         width: 36px;
         height: 36px;
         font-size: 20px;
     }
 
-    .privacy-note{
+    .privacy-note {
         flex-direction: column;
         text-align: center;
     }

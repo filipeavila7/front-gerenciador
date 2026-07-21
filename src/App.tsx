@@ -20,7 +20,7 @@ import InvitePage from "./pages/InvitePage";
 import Settings from "./pages/Settings";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./routes/PrivateRoute";
-
+import Me from "./pages/me";
 
 function App() {
   return (
@@ -38,6 +38,15 @@ function App() {
               element={
                 <PrivateRoute>
                   <FamilySelection />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path="/me"
+              element={
+                <PrivateRoute>
+                  <Me />
                 </PrivateRoute>
               }
             />

@@ -361,11 +361,7 @@ function Category() {
                 </div>
             </div>
 
-            <div className="category-toolbar">
-                <div className="categories-tabs">
-                    
-                </div>
-            </div>
+            
 
             {loading && !pageData ? (
                 <div className="category-empty">

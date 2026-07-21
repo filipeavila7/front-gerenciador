@@ -30,6 +30,27 @@
     display: flex;
     align-items: center;
     padding-bottom: 15px;
+    gap: 10px;
+}
+
+.voltar-box-2{
+    cursor: pointer;
+    
+    border-radius: 100px;
+    height: 30px;
+
+}
+
+.voltar-box-2:hover{
+    background: linear-gradient(145deg, #E8F994 0%, #A594F9 100%);
+}
+
+.voltar-box-2:hover .voltar-arr{
+    color: rgb(107, 103, 103);;
+}
+
+.voltar-arr{
+    font-size: 30px;
 }
 
 .nav-title p{
