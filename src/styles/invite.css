@@ -1,0 +1,87 @@
+.invite-lay{
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+
+.invite-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+.invite-title{}
+
+.invite-title h1{
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, #cabdf5, #8b7fd6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin: 0 0 8px 0;
+}
+
+.invite-img{
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 50%;
+
+}
+
+
+.invite-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.invite-actions{
+    width: 100%;
+}
+
+.invite-btn{
+    background: linear-gradient(90deg, #E8F994, #bcadf2);
+    border: none;
+    width: 100%;
+    color: #181833;
+    font-weight: 700;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: filter 0.2s ease;
+}
+
+.invite-btn-c{
+    background: transparent;
+    border: 1px solid white;
+    width: 100%;
+    color: #fdfdff;
+    font-weight: 700;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: filter 0.2s ease;
+}
+
+
+.expiration{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.invite-mark{
+    padding-top: 15px;
+    color: #E8F994;
+    font-size: 18px;
+    font-family: "Playwrite ID", cursive;
+    letter-spacing: 3px;
+}
+

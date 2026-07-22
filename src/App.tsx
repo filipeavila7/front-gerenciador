@@ -20,7 +20,9 @@ import InvitePage from "./pages/InvitePage";
 import Settings from "./pages/Settings";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./routes/PrivateRoute";
-import Me from "./pages/me";
+import Me from "./pages/Me";
+import NotFound from "./pages/NotFound";
+
 
 function App() {
   return (
@@ -62,6 +64,8 @@ function App() {
               path="/invite/:token"
               element={<InvitePage />}
             />
+
+            <Route path="*" element={<NotFound />} />
 
 
             {/* Tudo aqui dentro precisa estar logado */}
@@ -150,6 +154,9 @@ function App() {
                 path="transaction/:transactionId"
                 element={<TransactionDetails />}
               />
+
+
+              <Route path="*" element={<NotFound />} />
 
             </Route>
 

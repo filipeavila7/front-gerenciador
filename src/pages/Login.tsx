@@ -49,12 +49,10 @@ function Login() {
         setErrorMsg("");
 
         try {
-
             const response = await api.post<LoginResponse>(
                 "/auth/login",
                 form
             );
-
 
             await login(
                 response.data.accessToken,
@@ -62,13 +60,21 @@ function Login() {
             );
 
 
+            const pendingInvite = sessionStorage.getItem("pendingInvite");
+
+            if (pendingInvite) {
+                sessionStorage.removeItem("pendingInvite");
+
+                navigate(`/invite/${pendingInvite}`);
+                return;
+            }
+
+
             navigate("/families");
 
 
         } catch (error) {
-
             setErrorMsg(getErrorMessage(error));
-
         }
     }
 
