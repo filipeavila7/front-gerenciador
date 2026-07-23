@@ -74,6 +74,7 @@ function InvitePage() {
       );
 
       setInvite(res.data);
+      sessionStorage.removeItem("pendingInvite");
 
     } catch (err) {
       showToast("error", getErrorMessage(err));

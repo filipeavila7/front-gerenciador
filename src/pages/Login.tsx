@@ -59,17 +59,16 @@ function Login() {
                 response.data.refreshToken
             );
 
+            console.log("Depois do login");
+
 
             const pendingInvite = sessionStorage.getItem("pendingInvite");
+            
+            console.log("Pending:", pendingInvite);
 
-            if (pendingInvite) {
-                sessionStorage.removeItem("pendingInvite");
+            
 
-                navigate(`/invite/${pendingInvite}`);
-                return;
-            }
-
-
+            
             navigate("/families");
 
 
@@ -85,13 +84,15 @@ function Login() {
 
 
     if (authenticated) {
-        return (
-            <Navigate
-                to="/families"
-                replace
-            />
-        );
-    }
+    const pendingInvite = sessionStorage.getItem("pendingInvite");
+    console.log("entrou no bloco do autenticated")
+    return (
+        <Navigate
+            to={pendingInvite ? `/invite/${pendingInvite}` : "/families"}
+            replace
+        />
+    );
+}
 
 
     return (

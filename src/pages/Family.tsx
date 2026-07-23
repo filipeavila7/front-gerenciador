@@ -15,7 +15,8 @@ import {
     FaSignOutAlt,
     FaTimes,
     FaCamera,
-    FaUser
+    FaUser,
+    FaPlus
 } from "react-icons/fa";
 
 import "../styles/page.css";
@@ -50,6 +51,9 @@ function Family() {
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [savingFamily, setSavingFamily] = useState(false);
+
+
+    const [shareModal, setShareModal] = useState(false);
 
     // ===== ações de membro =====
     const [promotingId, setPromotingId] = useState<number | null>(null);
@@ -125,6 +129,18 @@ function Family() {
         setIsEditOpen(false);
         setImageFile(null);
         setImagePreview(null);
+    }
+
+
+    function openShareModal() {
+        if (!family) return;
+        setShareModal(true);
+    }
+
+
+    function closeShareModal() {
+        setShareModal(false);
+
     }
 
     function handleImageSelect(e: React.ChangeEvent<HTMLInputElement>) {
@@ -204,6 +220,33 @@ function Family() {
             showToast("error", getErrorMessage(err));
         } finally {
             setRemovingId(null);
+        }
+    }
+
+
+    async function handleShare() {
+        try {
+            const response = await api.post<{ token: string }>(
+                `/invite/family/${familyId}/new`
+            );
+
+            const inviteUrl = `${import.meta.env.VITE_FRONTEND_URL}/invite/${response.data.token}`;
+
+
+            if (navigator.share) {
+                await navigator.share({
+                    title: "Convite para família",
+                    text: "Você recebeu um convite para entrar na minha família!",
+                    url: inviteUrl,
+                });
+
+            } else {
+                await navigator.clipboard.writeText(inviteUrl);
+                showToast("success", "Link copiado!");
+            }
+
+        } catch (err) {
+            showToast("error", getErrorMessage(err));
         }
     }
 
@@ -341,11 +384,41 @@ function Family() {
                 </div>
             )}
 
+            {shareModal && (
+                <div className="modal-overlay" onClick={closeShareModal}>
+                    <div className="modal-box modal-box-small" onClick={e => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h2>Convidar novo membro</h2>
+                            <button className="modal-close-btn" onClick={closeShareModal}>
+                                <FaTimes />
+                            </button>
+                        </div>
+
+                        <p className="exit-warning-text">
+                            Cada convite é unico e contem uma duração de 1 semana
+                        </p>
+
+                        <div className="modal-footer">
+                            <button
+                                className="new-product-btn"
+                                onClick={handleShare}
+                            >
+                                Gerar link de convite
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <div className="page-header">
                 <div className="page-title-box">
                     <h1>Minha família</h1>
                     <p>Gerencie os dados e membros da sua família.</p>
                 </div>
+                <button onClick={openShareModal} className="new-product-btn" >
+                    <FaPlus /> Convidar
+                </button>
             </div>
 
             {/* ===== card principal da família ===== */}
@@ -432,14 +505,14 @@ function Family() {
                                                 {!isAdmin && (
                                                     <button
                                                         className="action-menu-item"
-                                                        onClick={() => handlePromoteToAdmin(member.id)}
+                                                        onClick={() => handlePromoteToAdmin(member.userId)}
                                                     >
                                                         <FaCrown /> Tornar admin
                                                     </button>
                                                 )}
                                                 <button
                                                     className="action-menu-item action-menu-danger"
-                                                    onClick={() => handleRemoveMember(member.id, member.name)}
+                                                    onClick={() => handleRemoveMember(member.userId, member.name)}
                                                 >
                                                     <FaUserMinus /> Remover da família
                                                 </button>

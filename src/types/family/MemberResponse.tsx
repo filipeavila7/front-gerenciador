@@ -5,5 +5,6 @@ export interface MemberResponse{
     name : string;
     profileImg : string;
     role : FamilyRole;
-    joinedAt : string
+    joinedAt : string;
+    userId : number;
 }
