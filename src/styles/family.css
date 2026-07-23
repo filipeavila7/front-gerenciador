@@ -366,3 +366,82 @@
         justify-content: center;
     }
 }
+
+
+@media (max-width: 520px){
+    .form-box{
+        padding: 20px 18px;
+    }
+
+    .form-title{
+        padding-bottom: 20px;
+        padding-top: 24px;
+    }
+
+    .form-title h2{
+        font-size: 36px;
+    }
+
+    .others-box{
+        gap: 12px;
+    }
+
+    .other-icon-box{
+        border-radius: 10px;
+        flex: 1;
+        padding: 14px 0;
+    }
+
+    /* inputs um pouco mais compactos em telas pequenas */
+    .form input{
+        padding: 13px;
+        padding-left: 44px;
+        font-size: 14px;
+    }
+
+    .login-icon{
+        left: 13px;
+        font-size: 17px;
+    }
+
+    .btn-login{
+        font-size: 15px;
+        padding: 12px;
+    }
+
+    .cadastro-p p{
+        font-size: 13px;
+    }
+}
+
+/* telas muito pequenas (iPhone SE, etc.) */
+@media (max-width: 380px){
+    .form-title h2{
+        font-size: 30px;
+        letter-spacing: 2px;
+    }
+
+    .form-box{
+        padding: 16px 14px;
+    }
+
+    .form label{
+        font-size: 13px;
+    }
+
+    .others-box{
+        gap: 8px;
+    }
+
+    .other-icon-box{
+        padding: 12px 0;
+    }
+
+    .other-icon{
+        font-size: 19px;
+    }
+
+    .division-div{
+        margin-top: 4px;
+    }
+}
