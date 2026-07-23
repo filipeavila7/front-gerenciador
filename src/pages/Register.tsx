@@ -11,17 +11,21 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { getErrorMessage } from "../components/utils/GetErrorMessage";
 import { useToast } from "../context/ToastContext";
+import type { UserRequest } from "../types/user/UserRequest";
+import type { UserResponse } from "../types/user/UserResponse";
 
-function Login() {
-    const {showToast} = useToast();
-    const navigate = useNavigate();
+
+function Register() {
+  const {showToast} = useToast();
+  const navigate = useNavigate();
     const {
         authenticated,
         loading,
         login
     } = useAuth();
 
-    const [form, setForm] = useState<LoginRequest>({
+    const [form, setForm] = useState<UserRequest>({
+        name : "",
         email: "",
         password: ""
     });
@@ -49,31 +53,16 @@ function Login() {
         setErrorMsg("");
 
         try {
-            const response = await api.post<LoginResponse>(
-                "/auth/login",
+            await api.post<UserResponse>(
+                "/users/new",
                 form
             );
-
-            await login(
-                response.data.accessToken,
-                response.data.refreshToken
-            );
-
-            console.log("Depois do login");
-
-
-            const pendingInvite = sessionStorage.getItem("pendingInvite");
             
-            console.log("Pending:", pendingInvite);
-
-            
-
-            
-            navigate("/families");
+            navigate("/");
 
 
         } catch (error) {
-            showToast("error" , getErrorMessage(error));
+             showToast("error" , getErrorMessage(error));
         }
     }
 
@@ -100,11 +89,24 @@ function Login() {
 
             <div className="form-box">
                 <div className="form-title">
-                    <h2>Log<span className="color1">in</span> </h2>
+                    <h2>Cadast<span className="color1">ro</span> </h2>
                 </div>
 
                 <form className="form" onSubmit={handleSubmit}>
 
+                    <label htmlFor="email">Nome</label>
+
+                    <div className="input-lay">
+                        <FaRegUser className="login-icon" />
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="nome"
+                            value={form.name}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
                     <label htmlFor="email">Email</label>
 
                     <div className="input-lay">
@@ -138,7 +140,7 @@ function Login() {
 
 
                     <button className="btn-login" type="submit">
-                        Entrar
+                        Cadastrar
                         <FaArrowRight className="btn-login-icon" />
                     </button>
 
@@ -155,25 +157,12 @@ function Login() {
                         <div className="line"></div>
                     </div>
 
-                    <div className="or">
-                        <h3>ou continue com</h3>
-                    </div>
+                   
 
-                    <div className="others-box">
-                        <div className="other-icon-box">
-                            <FaGoogle className="other-icon" />
-                        </div>
-                        <div className="other-icon-box">
-                            <FaDiscord className="other-icon" />
-                        </div>
-                        <div className="other-icon-box">
-                            <FaGithub className="other-icon" />
-                        </div>
-                    </div>
+                    
 
-
-                    <div className="cadastro-p" onClick={()=> navigate("/register")}>
-                        <p>Ainda não possui uma conta? <span className="color1">Criar conta</span></p>
+                    <div className="cadastro-p" onClick={()=> navigate("/")}>
+                        <p>Voltar <span className="color1">ao login ➔ </span></p>
                     </div>
 
 
@@ -209,4 +198,4 @@ function Login() {
 }
 
 
-export default Login;
+export default Register

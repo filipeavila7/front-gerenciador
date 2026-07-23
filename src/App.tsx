@@ -22,7 +22,7 @@ import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./routes/PrivateRoute";
 import Me from "./pages/Me";
 import NotFound from "./pages/NotFound";
-
+import Register from "./pages/Register";
 
 function App() {
   return (
@@ -57,6 +57,12 @@ function App() {
             <Route
               path="/"
               element={<Login />}
+            />
+
+
+            <Route
+              path="/register"
+              element={<Register />}
             />
 
 

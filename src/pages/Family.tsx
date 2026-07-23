@@ -400,7 +400,7 @@ function Family() {
 
                         <div className="modal-footer">
                             <button
-                                className="new-product-btn"
+                                className="share-btn"
                                 onClick={handleShare}
                             >
                                 Gerar link de convite

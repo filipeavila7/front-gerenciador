@@ -4,6 +4,25 @@
     padding: 40px 0;
 }
 
+
+.share-btn{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 46px;
+    padding: 0 20px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(90deg, #E8F994, #bcadf2);
+    color: #181833;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: filter 0.2s ease;
+    width: 100%;
+    justify-content: center;
+}
+
 /* ===== card principal ===== */
 .family-hero-card{
     display: flex;
